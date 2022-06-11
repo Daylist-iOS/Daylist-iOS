@@ -1,38 +1,31 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: ''
+about: 버그 및 수정 사항을 알려주세요.
+title: "[bug] bug desc ... "
 labels: ''
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+## 개요
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+### 🐞 버그 설명(발생 환경)
+* 버그가 발생한 환경에 대해서 자세히 설명해주세요.
+* e.g., macOS Catalina, Postman 7.36.0
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+### 🚗 정상적으로 동작한 경우
+* 재현 방법을 최대한 자세히 설명해주세요.
+* 
+* 정상적으로 작동했을 때의 상황을 작성해주세요.
+* 
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+### 🚑 현재의 상태
+* 현재 상황을 작성해주세요.
+* e.g., 500에러가 발생합니다.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+### 📝 todo
+- [ ] todo !
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
 
-**Additional context**
-Add any other context about the problem here.
+## 레퍼런스
+* 버그가 발생했을 때의 스크린샷, 로그 등을 첨부해주세요.
