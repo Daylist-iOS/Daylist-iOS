@@ -1,0 +1,6 @@
+framework module Pods_Daylist {
+  umbrella header "Pods-Daylist-umbrella.h"
+
+  export *
+  module * { export * }
+}
