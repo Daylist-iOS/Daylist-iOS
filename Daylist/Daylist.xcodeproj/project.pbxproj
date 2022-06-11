@@ -29,6 +29,8 @@
 		237A68582854992100E6A890 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A68572854992100E6A890 /* UITextView+.swift */; };
 		237A685A2854996900E6A890 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A68592854996900E6A890 /* UIButton+.swift */; };
 		237A685D285499B800E6A890 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A685C285499B800E6A890 /* UIViewController+.swift */; };
+		237A686028549A9600E6A890 /* Kyobo Handwriting 2019.otf in Resources */ = {isa = PBXBuildFile; fileRef = 237A685F28549A9600E6A890 /* Kyobo Handwriting 2019.otf */; };
+		237A686228549AFC00E6A890 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A686128549AFC00E6A890 /* UIFont+.swift */; };
 		23A5752628547E46006946DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A5752528547E46006946DD /* AppDelegate.swift */; };
 		23A5752F28547E47006946DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23A5752E28547E47006946DD /* Assets.xcassets */; };
 		23A5753228547E47006946DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23A5753028547E47006946DD /* LaunchScreen.storyboard */; };
@@ -58,6 +60,8 @@
 		237A68572854992100E6A890 /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		237A68592854996900E6A890 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		237A685C285499B800E6A890 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		237A685F28549A9600E6A890 /* Kyobo Handwriting 2019.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kyobo Handwriting 2019.otf"; sourceTree = "<group>"; };
+		237A686128549AFC00E6A890 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		23A5752228547E46006946DD /* Daylist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daylist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23A5752528547E46006946DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23A5752E28547E47006946DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -118,8 +122,17 @@
 				237A68572854992100E6A890 /* UITextView+.swift */,
 				237A68592854996900E6A890 /* UIButton+.swift */,
 				237A685C285499B800E6A890 /* UIViewController+.swift */,
+				237A686128549AFC00E6A890 /* UIFont+.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		237A685E28549A8800E6A890 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				237A685F28549A9600E6A890 /* Kyobo Handwriting 2019.otf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		23A5751928547E46006946DD = {
@@ -154,6 +167,7 @@
 		23AAFBF32854844400D7801A /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				237A685E28549A8800E6A890 /* Font */,
 				237A684E2854983200E6A890 /* Extension */,
 				237A6844285494C700E6A890 /* Service */,
 				237A6847285494E000E6A890 /* Network */,
@@ -361,6 +375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23A5753228547E47006946DD /* LaunchScreen.storyboard in Resources */,
+				237A686028549A9600E6A890 /* Kyobo Handwriting 2019.otf in Resources */,
 				23A5752F28547E47006946DD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,6 +445,7 @@
 				237A6841285493E600E6A890 /* SettingVC.swift in Sources */,
 				237A685D285499B800E6A890 /* UIViewController+.swift in Sources */,
 				237A68392854938400E6A890 /* AddModel.swift in Sources */,
+				237A686228549AFC00E6A890 /* UIFont+.swift in Sources */,
 				237A68522854987500E6A890 /* NotificationCenter+.swift in Sources */,
 				237A682D28548E3000E6A890 /* BaseViewController.swift in Sources */,
 				237A68582854992100E6A890 /* UITextView+.swift in Sources */,
