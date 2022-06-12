@@ -12,7 +12,7 @@ import Then
 class NavigationBar: BaseView {
     private var title = UILabel()
         .then {
-            $0.font = UIFont.systemFont(ofSize: 20)
+            $0.font = .KyoboHandwriting(size: 20)
         }
     
     private var backBtn = UIButton()
@@ -76,6 +76,7 @@ extension NavigationBar {
         }
         rightBtn.setTitle(title, for: .normal)
         rightBtn.setTitleColor(.label, for: .normal)
+        rightBtn.titleLabel?.font = .KyoboHandwriting(size: 15)
         rightBtn.addTarget(targetVC, action: action, for: .touchUpInside)
     }
 }

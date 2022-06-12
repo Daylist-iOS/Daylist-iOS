@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2373321C28565BF200D9814A /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2373321B28565BF200D9814A /* UIColor+.swift */; };
 		237A682B28548E0D00E6A890 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A682A28548E0D00E6A890 /* BaseView.swift */; };
 		237A682D28548E3000E6A890 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A682C28548E3000E6A890 /* BaseViewController.swift */; };
 		237A683328548FC400E6A890 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A683228548FC400E6A890 /* HomeVC.swift */; };
@@ -33,6 +34,8 @@
 		237A686228549AFC00E6A890 /* UIFont+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A686128549AFC00E6A890 /* UIFont+.swift */; };
 		237A686B2855D89A00E6A890 /* NaviType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A686A2855D89A00E6A890 /* NaviType.swift */; };
 		237A68712855DB9400E6A890 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A68702855DB9400E6A890 /* NavigationBar.swift */; };
+		237A68762855DCE400E6A890 /* CDPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A68752855DCE400E6A890 /* CDPlayerView.swift */; };
+		237A6878285624EB00E6A890 /* CDPlayerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237A6877285624EB00E6A890 /* CDPlayerType.swift */; };
 		23A5752628547E46006946DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A5752528547E46006946DD /* AppDelegate.swift */; };
 		23A5752F28547E47006946DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23A5752E28547E47006946DD /* Assets.xcassets */; };
 		23A5753228547E47006946DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23A5753028547E47006946DD /* LaunchScreen.storyboard */; };
@@ -40,6 +43,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2373321B28565BF200D9814A /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 		237A682A28548E0D00E6A890 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		237A682C28548E3000E6A890 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		237A683228548FC400E6A890 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
@@ -66,6 +70,8 @@
 		237A686128549AFC00E6A890 /* UIFont+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+.swift"; sourceTree = "<group>"; };
 		237A686A2855D89A00E6A890 /* NaviType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaviType.swift; sourceTree = "<group>"; };
 		237A68702855DB9400E6A890 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
+		237A68752855DCE400E6A890 /* CDPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDPlayerView.swift; sourceTree = "<group>"; };
+		237A6877285624EB00E6A890 /* CDPlayerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDPlayerType.swift; sourceTree = "<group>"; };
 		23A5752228547E46006946DD /* Daylist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daylist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		23A5752528547E46006946DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23A5752E28547E47006946DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -127,6 +133,7 @@
 				237A68592854996900E6A890 /* UIButton+.swift */,
 				237A685C285499B800E6A890 /* UIViewController+.swift */,
 				237A686128549AFC00E6A890 /* UIFont+.swift */,
+				2373321B28565BF200D9814A /* UIColor+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -142,6 +149,7 @@
 		237A68652855D7E100E6A890 /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				237A68742855DCC800E6A890 /* CDPlayer */,
 				237A68662855D7EE00E6A890 /* NavigationBar */,
 			);
 			path = Share;
@@ -159,8 +167,17 @@
 			isa = PBXGroup;
 			children = (
 				237A686A2855D89A00E6A890 /* NaviType.swift */,
+				237A6877285624EB00E6A890 /* CDPlayerType.swift */,
 			);
 			path = Enum;
+			sourceTree = "<group>";
+		};
+		237A68742855DCC800E6A890 /* CDPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				237A68752855DCE400E6A890 /* CDPlayerView.swift */,
+			);
+			path = CDPlayer;
 			sourceTree = "<group>";
 		};
 		23A5751928547E46006946DD = {
@@ -470,8 +487,10 @@
 				237A6837285490DA00E6A890 /* HomeModel.swift in Sources */,
 				237A683328548FC400E6A890 /* HomeVC.swift in Sources */,
 				237A686B2855D89A00E6A890 /* NaviType.swift in Sources */,
+				237A6878285624EB00E6A890 /* CDPlayerType.swift in Sources */,
 				237A682B28548E0D00E6A890 /* BaseView.swift in Sources */,
 				237A684D2854951C00E6A890 /* APISession.swift in Sources */,
+				237A68762855DCE400E6A890 /* CDPlayerView.swift in Sources */,
 				237A6856285498FB00E6A890 /* UITextField+.swift in Sources */,
 				237A6841285493E600E6A890 /* SettingVC.swift in Sources */,
 				237A685D285499B800E6A890 /* UIViewController+.swift in Sources */,
@@ -483,6 +502,7 @@
 				237A68582854992100E6A890 /* UITextView+.swift in Sources */,
 				237A68542854989500E6A890 /* UIView+.swift in Sources */,
 				237A683D285493B300E6A890 /* AddVM.swift in Sources */,
+				2373321C28565BF200D9814A /* UIColor+.swift in Sources */,
 				237A6843285493ED00E6A890 /* SettingVM.swift in Sources */,
 				237A6849285494F100E6A890 /* APIError.swift in Sources */,
 			);
