@@ -10,24 +10,6 @@ import RxCocoa
 import RxSwift
 import Alamofire
 
-protocol Lodable {
-    var loading: BehaviorRelay<Bool> { get }
-}
-
-extension Lodable {
-    var isLoading: Bool {
-        loading.value
-    }
-    
-    func beginLoading() {
-        loading.accept(true)
-    }
-    
-    func endLoading() {
-        loading.accept(false)
-    }
-}
-
 protocol YoutubeListViewModelOutput: Lodable {
     var medias: BehaviorRelay<[YoutubeItemResponse]> { get }
     
@@ -91,6 +73,10 @@ extension YoutubeSearchVM {
 
 extension YoutubeSearchVM {
     func getSearchResult(with keyword: String) {
+        if output.isLoading { return }
+
+        output.loading.accept(true)
+        
         var optionParams: Parameters {
             return [
                 "q": keyword,
@@ -110,7 +96,7 @@ extension YoutubeSearchVM {
             .subscribe(onNext: { owner, result in
                 switch result {
                 case .success(let data):
-                    dump(data)
+                    owner.output.loading.accept(false)
                     let medias = data.items
                     owner.output.medias.accept(medias)
                 case .failure(let error):

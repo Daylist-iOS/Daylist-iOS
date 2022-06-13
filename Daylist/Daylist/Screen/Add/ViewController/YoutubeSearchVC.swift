@@ -66,6 +66,7 @@ class YoutubeSearchVC: BaseViewController {
     
     override func bindOutput() {
         super.bindOutput()
+        bindLoading()
         bindUI()
         bindOnError()
         bindDataSource()
@@ -165,6 +166,16 @@ extension YoutubeSearchVC {
 // MARK: - Output
 
 extension YoutubeSearchVC {
+    private func bindLoading() {
+        viewModel.output.loading
+            .asDriver()
+            .drive(onNext: { [weak self] loading in
+                guard let self = self else { return }
+                self.loading(loading: loading)
+            })
+            .disposed(by: bag)
+    }
+    
     private func bindUI() {
         searchTextField.rx.text.orEmpty
             .distinctUntilChanged()

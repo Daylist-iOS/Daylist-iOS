@@ -51,6 +51,8 @@
 		23A5752628547E46006946DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A5752528547E46006946DD /* AppDelegate.swift */; };
 		23A5752F28547E47006946DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23A5752E28547E47006946DD /* Assets.xcassets */; };
 		23A5753228547E47006946DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23A5753028547E47006946DD /* LaunchScreen.storyboard */; };
+		23A933CA285771B9009E4CEE /* Loadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A933C9285771B9009E4CEE /* Loadable.swift */; };
+		23A933CD28577209009E4CEE /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A933CC28577209009E4CEE /* LoadingView.swift */; };
 		9D6DA303C98BFFC9E7AA0B21 /* Pods_Daylist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857655EDBDE2423C5BC9010E /* Pods_Daylist.framework */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +102,8 @@
 		23A5752528547E46006946DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23A5752E28547E47006946DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		23A5753128547E47006946DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		23A933C9285771B9009E4CEE /* Loadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loadable.swift; sourceTree = "<group>"; };
+		23A933CC28577209009E4CEE /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		23AAFBF1285483E300D7801A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		857655EDBDE2423C5BC9010E /* Pods_Daylist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Daylist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE0C2DD3BA6B9360AC3069AE /* Pods-Daylist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daylist.release.xcconfig"; path = "Target Support Files/Pods-Daylist/Pods-Daylist.release.xcconfig"; sourceTree = "<group>"; };
@@ -183,6 +187,7 @@
 		237A68652855D7E100E6A890 /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				23A933CB285771EA009E4CEE /* LoadingView */,
 				237A68742855DCC800E6A890 /* CDPlayer */,
 				237A68662855D7EE00E6A890 /* NavigationBar */,
 			);
@@ -243,9 +248,28 @@
 			path = Daylist;
 			sourceTree = "<group>";
 		};
+		23A933C82857719B009E4CEE /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				2373323028571D0900D9814A /* Input.swift */,
+				2373323228571D2100D9814A /* Output.swift */,
+				23A933C9285771B9009E4CEE /* Loadable.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		23A933CB285771EA009E4CEE /* LoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				23A933CC28577209009E4CEE /* LoadingView.swift */,
+			);
+			path = LoadingView;
+			sourceTree = "<group>";
+		};
 		23AAFBF32854844400D7801A /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				23A933C82857719B009E4CEE /* Foundation */,
 				237A684E2854983200E6A890 /* Extension */,
 				237A6844285494C700E6A890 /* Service */,
 				237A6847285494E000E6A890 /* Network */,
@@ -382,8 +406,6 @@
 				237A682A28548E0D00E6A890 /* BaseView.swift */,
 				237A682C28548E3000E6A890 /* BaseViewController.swift */,
 				2373322E28571C4A00D9814A /* BaseViewModel.swift */,
-				2373323028571D0900D9814A /* Input.swift */,
-				2373323228571D2100D9814A /* Output.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -526,6 +548,7 @@
 				2373323328571D2100D9814A /* Output.swift in Sources */,
 				2373322928570E9800D9814A /* YoutubeListResponse.swift in Sources */,
 				237A684B2854950100E6A890 /* APIService.swift in Sources */,
+				23A933CD28577209009E4CEE /* LoadingView.swift in Sources */,
 				2373321E2856FA2E00D9814A /* YoutubeSearchVC.swift in Sources */,
 				237A6846285494D200E6A890 /* Service.swift in Sources */,
 				237A683B2854938F00E6A890 /* AddVC.swift in Sources */,
@@ -542,6 +565,7 @@
 				237A6878285624EB00E6A890 /* CDPlayerType.swift in Sources */,
 				237A682B28548E0D00E6A890 /* BaseView.swift in Sources */,
 				237A684D2854951C00E6A890 /* APISession.swift in Sources */,
+				23A933CA285771B9009E4CEE /* Loadable.swift in Sources */,
 				237A68762855DCE400E6A890 /* CDPlayerView.swift in Sources */,
 				237A6856285498FB00E6A890 /* UITextField+.swift in Sources */,
 				237A6841285493E600E6A890 /* SettingVC.swift in Sources */,

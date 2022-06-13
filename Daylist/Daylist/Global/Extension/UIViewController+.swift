@@ -89,4 +89,16 @@ extension UIViewController {
         
         present(alertController, animated: true)
     }
+    
+    /// 로딩을 보여주는 메서드
+    func loading(loading: Bool) {
+        if loading {
+            let loadingView = LoadingView(frame: view.frame)
+            view.addSubview(loadingView)
+            return
+        }
+        
+        guard let loadingView = view.subviews.compactMap({ $0 as? LoadingView }).first else { return }
+        loadingView.removeFromSuperview()
+    }
 }
