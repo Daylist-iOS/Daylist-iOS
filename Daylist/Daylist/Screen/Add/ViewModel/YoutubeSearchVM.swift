@@ -105,7 +105,7 @@ extension YoutubeSearchVM {
             return [
                 "q": "playlist",
                 "part": "snippet",
-                "key": "API Key",
+                "key": Bundle.main.apiKey,
                 "type": "video",
                 "maxResults": 10,
                 "regionCode": "KR"
