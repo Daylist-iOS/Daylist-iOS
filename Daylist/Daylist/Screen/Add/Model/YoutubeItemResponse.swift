@@ -43,9 +43,9 @@ struct Thumbnail: Decodable {
 }
 
 extension Thumbnails {
-    var thumbnailURL: URL? {
-        return URL(string: (medium?.url != nil
-                            ? medium?.url
-                            : `default`?.url) ?? "")
+    var thumbnailURL: String? {
+        if high?.url != nil { return high!.url }
+        else if medium?.url != nil { return medium!.url }
+        else { return `default`?.url ?? ""}
     }
 }

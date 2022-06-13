@@ -52,8 +52,8 @@ class AddVC: BaseViewController {
     
     private var bag = DisposeBag()
     private var viewModel = AddVM()
-    let naviBar = NavigationBar()
-    var imagePicker: UIImagePickerController!
+    private let naviBar = NavigationBar()
+    private var imagePicker: UIImagePickerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -152,12 +152,13 @@ extension AddVC {
         }
         
         searchTextField.snp.makeConstraints {
-            $0.centerY.leading.height.equalToSuperview()
+            $0.top.leading.bottom.equalToSuperview()
         }
         
         searchIcon.snp.makeConstraints {
             $0.centerY.trailing.equalToSuperview()
             $0.leading.equalTo(searchTextField.snp.trailing).offset(4)
+            $0.width.height.equalTo(24)
         }
         
         separator.snp.makeConstraints {
@@ -167,16 +168,16 @@ extension AddVC {
         
         postTitle.snp.makeConstraints {
             $0.top.equalTo(searchView.snp.bottom).offset(25)
-            $0.leading.equalToSuperview().offset(30)
-            $0.trailing.equalToSuperview().offset(-30)
+            $0.leading.equalToSuperview().offset(25)
+            $0.trailing.equalToSuperview().offset(-25)
             $0.height.equalTo(20)
         }
         
         postContent.snp.makeConstraints {
             $0.top.equalTo(postTitle.snp.bottom).offset(8)
-            $0.leading.equalToSuperview().offset(30)
-            $0.trailing.equalToSuperview().offset(-30)
-            $0.height.equalTo(80)
+            $0.leading.equalToSuperview().offset(25)
+            $0.trailing.equalToSuperview().offset(-25)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
@@ -221,14 +222,26 @@ extension AddVC {
 
 extension AddVC {
     private func bindUI() {
+        let searchVC = YoutubeSearchVC()
+
         searchView.rx.tapGesture()
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                let searchVC = YoutubeSearchVC()
                 self.navigationController?.pushViewController(searchVC, animated: true)
             })
             .disposed(by: bag)
+    
+        searchVC.viewModel.media.asObservable()
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] media in
+                guard let self = self else { return }
+                let thumbnailImage = try? Data(contentsOf: URL(string: media.thumbnailURL)!)
+                self.player.setThumbnailImage(with: UIImage(data: thumbnailImage!)!)
+                self.postTitle.text = media.title
+                self.searchTextField.text = media.mediaLink
+            })
+            .disposed(by: self.bag)
     }
     
     private func bindCollectionViewModelSelected() {

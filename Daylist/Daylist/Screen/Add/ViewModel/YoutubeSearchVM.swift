@@ -34,6 +34,8 @@ final class YoutubeSearchVM: BaseViewModel {
     var input = Input()
     var output = Output()
     
+    var media = PublishRelay<AddModel>()
+
     // MARK: - Input
     
     struct Input {}

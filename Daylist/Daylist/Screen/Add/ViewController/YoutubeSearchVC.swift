@@ -14,9 +14,10 @@ import SnapKit
 import Then
 
 class YoutubeSearchVC: BaseViewController {
+    var viewModel = YoutubeSearchVM()
     private var bag = DisposeBag()
-    private var viewModel = YoutubeSearchVM()
-    let naviBar = NavigationBar()
+    private let naviBar = NavigationBar()
+    private var media: AddModel?
     
     private var searchTextField = UITextField()
         .then {
@@ -144,10 +145,12 @@ extension YoutubeSearchVC {
         searchResultTV.rx.modelSelected(YoutubeItemResponse.self)
             .bind(onNext: { [weak self] media in
                 guard let self = self else { return }
-                // TODO: - AddVC 데이터 연결
-                print(media.snippet.title)
-                print("https://www.youtube.com/watch?v=\(media.id.videoId)")
-                print(URL(string: media.snippet.thumbnails.default?.url ?? "")!)
+                self.viewModel.media.accept(AddModel(userId: 1,
+                                                     title: media.snippet.title,
+                                                     description: nil,
+                                                     thumbnailURL: media.snippet.thumbnails.thumbnailURL ?? "",
+                                                     mediaLink: "https://www.youtube.com/watch?v=\(media.id.videoId)",
+                                                     emotion: nil))
                 self.popVC()
             })
             .disposed(by: bag)
