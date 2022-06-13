@@ -94,9 +94,9 @@ extension YoutubeSearchVM {
         apiSession.getRequest(with: resource, param: optionParams)
             .withUnretained(self)
             .subscribe(onNext: { owner, result in
+                owner.output.loading.accept(false)
                 switch result {
                 case .success(let data):
-                    owner.output.loading.accept(false)
                     let medias = data.items
                     owner.output.medias.accept(medias)
                 case .failure(let error):
