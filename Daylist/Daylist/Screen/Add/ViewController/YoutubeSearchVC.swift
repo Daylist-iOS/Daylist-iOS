@@ -66,6 +66,7 @@ class YoutubeSearchVC: BaseViewController {
     
     override func bindOutput() {
         super.bindOutput()
+        bindUI()
         bindOnError()
         bindDataSource()
     }
@@ -155,7 +156,7 @@ extension YoutubeSearchVC {
         searchBtn.rx.tap
             .bind(onNext: {[weak self] _ in
                 guard let self = self else { return }
-                self.viewModel.fetchAll()
+                self.viewModel.getSearchResult(with: self.searchTextField.text ?? "")
             })
             .disposed(by: bag)
     }
@@ -164,6 +165,17 @@ extension YoutubeSearchVC {
 // MARK: - Output
 
 extension YoutubeSearchVC {
+    private func bindUI() {
+        searchTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .subscribe(onNext: {[weak self] text in
+                guard let self = self else { return }
+                self.searchBtn.tintColor = text.isEmpty ? .lightGray : .black
+                self.searchBtn.isEnabled = text.isEmpty ? false : true
+            })
+            .disposed(by: bag)
+    }
+    
     private func bindOnError() {
         viewModel.output.onError
             .asDriver(onErrorJustReturn: .unknown)

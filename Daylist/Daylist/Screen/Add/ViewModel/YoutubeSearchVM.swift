@@ -59,9 +59,6 @@ final class YoutubeSearchVM: BaseViewModel {
     // MARK: - Output
     
     struct Output: YoutubeListViewModelOutput {
-        
-        // TODO: 06. Conform NewsListViewModelOutput Protocol
-        //BehaviorRelay는 어디선가 구독하면 초기값부터 구독하기때문에
         var medias = BehaviorRelay<[YoutubeItemResponse]>(value: [])
         var onError = PublishSubject<APIError>()
         var loading = BehaviorRelay<Bool>(value: false)
@@ -79,13 +76,6 @@ final class YoutubeSearchVM: BaseViewModel {
     }
 }
 
-// MARK: - Helpers
-
-extension YoutubeSearchVM {
-    func fetchAll() {
-        getSearchResult()
-    }
-}
 
 // MARK: - Input
 
@@ -100,10 +90,10 @@ extension YoutubeSearchVM {
 }
 
 extension YoutubeSearchVM {
-    private func getSearchResult() {
+    func getSearchResult(with keyword: String) {
         var optionParams: Parameters {
             return [
-                "q": "playlist",
+                "q": keyword,
                 "part": "snippet",
                 "key": Bundle.main.apiKey,
                 "type": "video",
