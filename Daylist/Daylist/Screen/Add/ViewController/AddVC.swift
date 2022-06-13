@@ -7,6 +7,7 @@
 
 import UIKit
 import RxCocoa
+import RxDataSources
 import RxGesture
 import RxSwift
 import SnapKit
@@ -15,22 +16,37 @@ import Photos
 
 class AddVC: BaseViewController {
     private var player = CDPlayerView()
+    private var emotionCV = UICollectionView(frame: .zero, collectionViewLayout: .init())
+    private var bag = DisposeBag()
+    private var viewModel = AddVM()
     let naviBar = NavigationBar()
-    var imagePicker:UIImagePickerController!
+    var imagePicker: UIImagePickerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configurePlayer()
+    }
+    
+    override func configureView() {
+        super.configureView()
         configureNaviBar()
+        configurePlayer()
+        configureCollectionView()
+    }
+    
+    override func layoutView() {
+        super.layoutView()
         configureLayout()
     }
     
     override func bindInput() {
         super.bindInput()
+        bindCollectionViewModelSelected()
     }
     
     override func bindOutput() {
         super.bindOutput()
+        bindOnError()
+        bindDataSource()
     }
     
 }
@@ -53,6 +69,17 @@ extension AddVC {
         let searchVC = YoutubeSearchVC()
         navigationController?.pushViewController(searchVC, animated: true)
     }
+    
+    private func configureCollectionView() {
+        let cellWidth = (screenWidth - 50 - 80) / 5
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 20
+        layout.itemSize = CGSize(width: cellWidth , height: cellWidth / 50 * 76)
+        emotionCV = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        view.addSubview(emotionCV)
+        emotionCV.register(EmotionCVC.self, forCellWithReuseIdentifier: EmotionCVC.className)
+    }
 }
 
 // MARK: - Layout
@@ -67,6 +94,13 @@ extension AddVC {
             $0.height.equalTo(player.snp.width).multipliedBy(287.0/260.0)
         }
         player.configureLayout(with: .add)
+        
+        emotionCV.snp.makeConstraints {
+            $0.top.equalTo(player.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().offset(25)
+            $0.trailing.equalToSuperview().offset(-25)
+            $0.height.equalTo(100)
+        }
     }
 }
 
@@ -109,13 +143,50 @@ extension AddVC {
 // MARK: - Input
 
 extension AddVC {
-    
+    private func bindCollectionViewModelSelected() {
+        emotionCV.rx.modelSelected(EmotionType.self)
+            .bind(onNext: { [weak self] emotion in
+                guard let self = self else { return }
+                // TODO: - 서버 연결
+                print(emotion)
+            })
+            .disposed(by: bag)
+    }
 }
 
 // MARK: - Output
 
 extension AddVC {
+    private func bindOnError() {
+        viewModel.output.onError
+            .asDriver(onErrorJustReturn: .unknown)
+            .drive(onNext: { [weak self] error in
+                guard let self = self else { return }
+                self.showErrorAlert(error.description)
+            })
+            .disposed(by: bag)
+    }
     
+    private func bindDataSource() {
+        let dataSource = dataSource()
+        
+        viewModel.output.dataSource
+            .bind(to: emotionCV.rx.items(dataSource: dataSource))
+            .disposed(by: bag)
+    }
+}
+
+// MARK: - DataSource
+
+extension AddVC {
+    private func dataSource() -> RxCollectionViewSectionedReloadDataSource<DataSourceEmotion> {
+        let dataSource = RxCollectionViewSectionedReloadDataSource<DataSourceEmotion> { _, collectionView, indexPath, emotionType in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmotionCVC.className, for: indexPath) as? EmotionCVC else { return UICollectionViewCell() }
+            cell.configureCell(with: emotionType)
+            return cell
+        }
+        return dataSource
+    }
 }
 
 //MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate
