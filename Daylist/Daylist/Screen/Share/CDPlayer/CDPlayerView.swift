@@ -56,6 +56,7 @@ extension CDPlayerView {
         layer.masksToBounds = false
     }
     
+    /// 버튼이 있는 player의 경우 타입에 따라 버튼을 추가해주는 함수
     func configurePlayerBtn(playerType: CDPlayerType, target: Any?, action: Selector) {
         configureBtnLayout()
         playerBtn.setTitle(playerType.playerBtnTitle, for: .normal)
@@ -63,7 +64,9 @@ extension CDPlayerView {
         playerBtn.addTarget(target, action: action, for: .touchUpInside)
     }
     
+    /// CD Player 썸네일을 바꿔주는 함수
     func setThumbnailImage(with image: UIImage) {
+        playerCD.layer.cornerRadius = playerCD.frame.width / 2
         playerCD.contentMode = .scaleAspectFill
         playerCD.image = image
     }
@@ -71,17 +74,18 @@ extension CDPlayerView {
 
 // MARK: - Layout
 extension CDPlayerView {
+    /// player에 따라 선언 및 레이아웃 지정 후 호출하여 내부 constraint를 지정해주는 함수
     func configureLayout(with playerType: CDPlayerType) {
         layer.cornerRadius = playerType.cornerRadius
         addSubview(playerBaseImage)
         playerBaseImage.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(playerType.inset)
+            $0.top.leading.trailing.equalToSuperview().inset(playerType.baseInset)
             $0.height.equalTo(playerBaseImage.snp.width)
         }
         
         playerBaseImage.addSubview(playerCD)
         playerCD.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(playerBaseImage.frame.width / 24)
+            $0.edges.equalToSuperview().inset(playerType.CDInset)
         }
         
         playerCD.addSubview(playerCenterImage)
