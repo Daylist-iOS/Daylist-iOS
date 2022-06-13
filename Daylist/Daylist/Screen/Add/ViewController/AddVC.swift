@@ -13,10 +13,43 @@ import RxSwift
 import SnapKit
 import Then
 import Photos
+import UITextView_Placeholder
 
 class AddVC: BaseViewController {
     private var player = CDPlayerView()
     private var emotionCV = UICollectionView(frame: .zero, collectionViewLayout: .init())
+    private var searchView = UIView()
+    private var searchTextField = UITextField()
+        .then {
+            $0.font = .KyoboHandwriting(size: 15)
+            $0.placeholder = "URL"
+            $0.isEnabled = false
+        }
+    
+    private var searchIcon = UIImageView()
+        .then {
+            $0.image = UIImage(systemName: "link")
+            $0.tintColor = .black
+        }
+    
+    private var separator = UIView()
+        .then {
+            $0.backgroundColor = .gray
+        }
+    
+    private var postTitle = UITextField()
+        .then {
+            $0.font = .KyoboHandwriting(size: 20)
+            $0.placeholder = "제목"
+        }
+    
+    private var postContent = UITextView()
+        .then {
+            $0.font = .KyoboHandwriting(size: 15)
+            $0.textContainer.lineFragmentPadding = 0
+            $0.placeholder = "오늘은 어떤 영상을 보셨나요?"
+        }
+    
     private var bag = DisposeBag()
     private var viewModel = AddVM()
     let naviBar = NavigationBar()
@@ -31,6 +64,8 @@ class AddVC: BaseViewController {
         configureNaviBar()
         configurePlayer()
         configureCollectionView()
+        configureSearchView()
+        configureContentView()
     }
     
     override func layoutView() {
@@ -40,6 +75,7 @@ class AddVC: BaseViewController {
     
     override func bindInput() {
         super.bindInput()
+        bindUI()
         bindCollectionViewModelSelected()
     }
     
@@ -57,17 +93,11 @@ extension AddVC {
     private func configureNaviBar() {
         naviBar.configureNaviBar(targetVC: self, title: "게시글 작성")
         naviBar.configureBackBtn(targetVC: self, action: #selector(dismissVC), naviType: .present)
-        naviBar.configureRightBarBtn(targetVC: self, action: #selector(asdf), title: "저장")
+        naviBar.configureRightBarBtn(targetVC: self, action: #selector(dismissVC), title: "저장")
     }
     
     private func configurePlayer() {
         player.configurePlayerBtn(playerType: .add, target: self, action: #selector(showGallery))
-    }
-    
-    // TODO: - 임시 화면 연결
-    @objc func asdf() {
-        let searchVC = YoutubeSearchVC()
-        navigationController?.pushViewController(searchVC, animated: true)
     }
     
     private func configureCollectionView() {
@@ -79,6 +109,18 @@ extension AddVC {
         
         view.addSubview(emotionCV)
         emotionCV.register(EmotionCVC.self, forCellWithReuseIdentifier: EmotionCVC.className)
+    }
+    
+    private func configureSearchView() {
+        view.addSubview(searchView)
+        searchView.addSubview(searchTextField)
+        searchView.addSubview(searchIcon)
+        searchView.addSubview(separator)
+    }
+    
+    private func configureContentView() {
+        view.addSubview(postTitle)
+        view.addSubview(postContent)
     }
 }
 
@@ -99,7 +141,42 @@ extension AddVC {
             $0.top.equalTo(player.snp.bottom).offset(30)
             $0.leading.equalToSuperview().offset(25)
             $0.trailing.equalToSuperview().offset(-25)
-            $0.height.equalTo(100)
+            $0.height.equalTo(((screenWidth - 50 - 80) / 5) / 50 * 76)
+        }
+        
+        searchView.snp.makeConstraints {
+            $0.top.equalTo(emotionCV.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(25)
+            $0.trailing.equalToSuperview().offset(-25)
+            $0.height.equalTo(60)
+        }
+        
+        searchTextField.snp.makeConstraints {
+            $0.centerY.leading.height.equalToSuperview()
+        }
+        
+        searchIcon.snp.makeConstraints {
+            $0.centerY.trailing.equalToSuperview()
+            $0.leading.equalTo(searchTextField.snp.trailing).offset(4)
+        }
+        
+        separator.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        postTitle.snp.makeConstraints {
+            $0.top.equalTo(searchView.snp.bottom).offset(25)
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview().offset(-30)
+            $0.height.equalTo(20)
+        }
+        
+        postContent.snp.makeConstraints {
+            $0.top.equalTo(postTitle.snp.bottom).offset(8)
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview().offset(-30)
+            $0.height.equalTo(80)
         }
     }
 }
@@ -143,6 +220,17 @@ extension AddVC {
 // MARK: - Input
 
 extension AddVC {
+    private func bindUI() {
+        searchView.rx.tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let searchVC = YoutubeSearchVC()
+                self.navigationController?.pushViewController(searchVC, animated: true)
+            })
+            .disposed(by: bag)
+    }
+    
     private func bindCollectionViewModelSelected() {
         emotionCV.rx.modelSelected(EmotionType.self)
             .bind(onNext: { [weak self] emotion in
