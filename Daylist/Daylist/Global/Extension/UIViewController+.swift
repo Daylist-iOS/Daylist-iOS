@@ -76,4 +76,17 @@ extension UIViewController {
         alertViewController.addAction(okAction)
         self.present(alertViewController, animated: true, completion: completion)
     }
+    
+    /// 에러 Alert 메서드
+    func showErrorAlert(_ message: String?) {
+        let alertController = UIAlertController(title: "Error",
+                                                message: message,
+                                                preferredStyle: .alert)
+        let action = UIAlertAction(title: "Confirm",
+                                   style: .default)
+        
+        alertController.addAction(action)
+        
+        present(alertController, animated: true)
+    }
 }
