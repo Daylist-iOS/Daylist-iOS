@@ -37,6 +37,14 @@ extension UIViewController {
         view.endEditing(true)
     }
     
+    @objc func popVC() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func dismissVC() {
+        dismiss(animated: true)
+    }
+    
     /**
      - Description:
      VC나 View 내에서 해당 함수를 호출하면, 햅틱이 발생하는 메서드입니다.
