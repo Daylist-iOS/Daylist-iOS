@@ -54,6 +54,7 @@ class AddVC: BaseViewController {
     private var viewModel = AddVM()
     private let naviBar = NavigationBar()
     private var imagePicker: UIImagePickerController!
+    private var myMedia: AddModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +77,6 @@ class AddVC: BaseViewController {
     override func bindInput() {
         super.bindInput()
         bindUI()
-        bindCollectionViewModelSelected()
     }
     
     override func bindOutput() {
@@ -236,20 +236,24 @@ extension AddVC {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] media in
                 guard let self = self else { return }
+                self.myMedia = media
                 let thumbnailImage = try? Data(contentsOf: URL(string: media.thumbnailURL)!)
                 self.player.setThumbnailImage(with: UIImage(data: thumbnailImage!)!)
                 self.postTitle.text = media.title
                 self.searchTextField.text = media.mediaLink
             })
             .disposed(by: self.bag)
-    }
-    
-    private func bindCollectionViewModelSelected() {
-        emotionCV.rx.modelSelected(EmotionType.self)
-            .bind(onNext: { [weak self] emotion in
+        
+        naviBar.rightBtn.rx.tap
+            .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                // TODO: - 서버 연결
-                print(emotion)
+                let media = AddModel(userId: 1,
+                                     title: self.postTitle.text ?? "",
+                                     description: self.postContent.text ?? "",
+                                     thumbnailURL: self.myMedia!.thumbnailURL,
+                                     mediaLink: self.myMedia!.mediaLink,
+                                     emotion: self.emotionCV.indexPathsForSelectedItems?.first?.row)
+                self.viewModel.postMediaData(with: media)
             })
             .disposed(by: bag)
     }

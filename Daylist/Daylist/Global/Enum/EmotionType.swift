@@ -16,6 +16,21 @@ enum EmotionType: CaseIterable {
 }
 
 extension EmotionType {
+    var index: Int {
+        switch self {
+        case .happy:
+            return 0
+        case .flutter:
+            return 1
+        case .comfortable:
+            return 2
+        case .notGood:
+            return 3
+        case .sad:
+            return 4
+        }
+    }
+    
     var emotionTintColor: UIColor {
         switch self {
         case .happy:
@@ -30,6 +45,7 @@ extension EmotionType {
             return UIColor.blue
         }
     }
+    
     var emotionImage: UIImage {
         switch self {
         case .happy:

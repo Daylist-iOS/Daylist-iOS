@@ -28,6 +28,7 @@ extension AddViewModelOutput {
 final class AddVM: BaseViewModel {
     
     var apiSession: APIService = APISession()
+    let apiError = PublishSubject<APIError>()
     var bag = DisposeBag()
     var input = Input()
     var output = Output()
@@ -66,4 +67,27 @@ extension AddVM {
 
 extension AddVM {
     func bindOutput() {}
+}
+
+// MARK: - Networking
+
+extension AddVM {
+    func postMediaData(with media: AddModel) {
+        let baseURL = "https://asia-northeast3-daylist-65de6.cloudfunctions.net/server/playlist"
+        let url = URL(string: baseURL)!
+        let resource = urlResource<String>(url: url)
+        
+        apiSession.postRequest(with: resource, param: media.addParam)
+            .withUnretained(self)
+            .subscribe(onNext: { owner, result in
+                switch result {
+                case .failure(let error):
+                    owner.apiError.onNext(error)
+                    
+                case .success(let data):
+                    dump(data)
+                }
+            })
+            .disposed(by: bag)
+    }
 }

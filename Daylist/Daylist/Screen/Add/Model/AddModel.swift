@@ -32,6 +32,7 @@ extension AddModel {
             "userId": 1,
             "title": title,
             "description": description ?? "",
+            "thumbnailURL": thumbnailURL,
             "mediaLink": mediaLink,
             "emotion": emotion ?? 0
         ]

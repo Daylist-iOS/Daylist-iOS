@@ -21,6 +21,8 @@ class NavigationBar: BaseView {
             $0.tintColor = .label
         }
     
+    var rightBtn = UIButton()
+    
     override func configureView() {
         super.configureView()
     }
@@ -55,7 +57,6 @@ extension NavigationBar {
     }
     
     func configureRightBarBtn(targetVC: UIViewController, action: Selector, image: UIImage) {
-        let rightBtn = UIButton()
         self.addSubview(rightBtn)
         rightBtn.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -67,7 +68,6 @@ extension NavigationBar {
     }
     
     func configureRightBarBtn(targetVC: UIViewController, action: Selector, title: String) {
-        let rightBtn = UIButton()
         self.addSubview(rightBtn)
         rightBtn.snp.makeConstraints {
             $0.centerY.equalToSuperview()
