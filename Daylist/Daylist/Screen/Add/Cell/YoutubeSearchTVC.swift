@@ -11,7 +11,7 @@ import Then
 import UIKit
 
 class YoutubeSearchTVC: UITableViewCell {
-    var thumbnail = UIImageView()
+    var thumbnailImage = UIImageView()
         .then {
             $0.clipsToBounds = true
             $0.contentMode = .scaleAspectFill
@@ -28,7 +28,7 @@ class YoutubeSearchTVC: UITableViewCell {
             $0.setContentHuggingPriority(.required, for: .vertical)
         }
     
-    var channelTitle = UILabel()
+    var channelTitleLabel = UILabel()
         .then {
             $0.font = .KyoboHandwriting(size: 14)
             $0.textColor = .darkGray
@@ -37,7 +37,7 @@ class YoutubeSearchTVC: UITableViewCell {
             $0.setContentHuggingPriority(.defaultLow, for: .vertical)
         }
     
-    var youtubeURL = UILabel()
+    var youtubeURLLabel = UILabel()
         .then {
             $0.font = .KyoboHandwriting(size: 14)
             $0.textColor = .darkGray
@@ -71,10 +71,10 @@ class YoutubeSearchTVC: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        thumbnail.kf.cancelDownloadTask()
-        thumbnail.image = nil
+        thumbnailImage.kf.cancelDownloadTask()
+        thumbnailImage.image = nil
         titleLabel.text = nil
-        youtubeURL.text = nil
+        youtubeURLLabel.text = nil
     }
     
     override func layoutSubviews() {
@@ -89,18 +89,18 @@ class YoutubeSearchTVC: UITableViewCell {
 extension YoutubeSearchTVC {
     func configureCell(with media: YoutubeItemResponse, with size: CGSize) {
         let processor = DownsamplingImageProcessor(size: size)
-        thumbnail.kf.setImage(with: media.snippet.thumbnails.thumbnailURL,
+        thumbnailImage.kf.setImage(with: media.snippet.thumbnails.thumbnailURL,
                                        placeholder: UIImage(),
                                        options: [
                                         .processor(processor),
                                         .scaleFactor(UIScreen.main.scale),
                                         .cacheOriginalImage,
                                        ])
-        thumbnail.contentMode = .scaleAspectFill
+        thumbnailImage.contentMode = .scaleAspectFill
         
         titleLabel.text = media.snippet.title
-        channelTitle.text = media.snippet.channelTitle
-        youtubeURL.text = "https://www.youtube.com/watch?v=\(media.id.videoId)"
+        channelTitleLabel.text = media.snippet.channelTitle
+        youtubeURLLabel.text = "https://www.youtube.com/watch?v=\(media.id.videoId)"
     }
 }
 
@@ -114,11 +114,11 @@ extension YoutubeSearchTVC {
     private func configureSubViews() {
         contentView.addSubview(containerView)
         
-        containerView.addSubview(thumbnail)
+        containerView.addSubview(thumbnailImage)
         containerView.addSubview(stackView)
         stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(channelTitle)
-        stackView.addArrangedSubview(youtubeURL)
+        stackView.addArrangedSubview(channelTitleLabel)
+        stackView.addArrangedSubview(youtubeURLLabel)
     }
 }
 
@@ -138,16 +138,16 @@ extension YoutubeSearchTVC {
     }
     
     private func layoutThumbnailImageView() {
-        thumbnail.snp.makeConstraints {
+        thumbnailImage.snp.makeConstraints {
             $0.top.bottom.leading.equalToSuperview()
-            $0.width.equalTo(thumbnail.snp.height)
+            $0.width.equalTo(thumbnailImage.snp.height)
         }
     }
     
     private func layoutStackView() {
         stackView.snp.makeConstraints {
             $0.top.bottom.trailing.equalToSuperview()
-            $0.leading.equalTo(thumbnail.snp.trailing).offset(10)
+            $0.leading.equalTo(thumbnailImage.snp.trailing).offset(10)
         }
     }
 }

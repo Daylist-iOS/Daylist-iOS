@@ -15,7 +15,7 @@ import Photos
 
 class AddVC: BaseViewController {
     private var player = CDPlayerView()
-    let naviBar = NavigationBar()
+    private let naviBar = NavigationBar()
     var imagePicker:UIImagePickerController!
     
     override func viewDidLoad() {
