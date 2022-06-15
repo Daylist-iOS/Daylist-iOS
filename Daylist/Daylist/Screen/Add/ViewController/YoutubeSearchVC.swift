@@ -13,7 +13,7 @@ import RxSwift
 import SnapKit
 import Then
 
-class YoutubeSearchVC: BaseViewController {
+final class YoutubeSearchVC: BaseViewController {
     var viewModel = YoutubeSearchVM()
     private var bag = DisposeBag()
     private let naviBar = NavigationBar()

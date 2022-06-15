@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class AddNC: UIViewController {
+class AddNC: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,16 +19,9 @@ class AddNC: UIViewController {
 // MARK: - Configure
 extension AddNC {
     private func embedContentVC() {
+        setNavigationBarHidden(true, animated: false)
         let subVC = AddVC()
-        let navigationController = UINavigationController(rootViewController: subVC)
-        navigationController.setNavigationBarHidden(true, animated: false)
-        
-        view.addSubview(navigationController.view)
-        navigationController.view.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
-        addChild(navigationController)
-        navigationController.didMove(toParent: self)
+        addChild(subVC)
+        navigationController?.didMove(toParent: self)
     }
 }
