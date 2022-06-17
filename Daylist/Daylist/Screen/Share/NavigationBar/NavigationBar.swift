@@ -21,6 +21,8 @@ class NavigationBar: BaseView {
             $0.tintColor = .label
         }
     
+    var rightBtn = UIButton()
+    
     override func configureView() {
         super.configureView()
     }
@@ -54,8 +56,7 @@ extension NavigationBar {
         backBtn.addTarget(targetVC, action: action, for: .touchUpInside)
     }
     
-    func configureRightBarBtn(targetVC: UIViewController, action: Selector, image: UIImage) {
-        let rightBtn = UIButton()
+    func configureRightBarBtn(targetVC: UIViewController, image: UIImage) {
         self.addSubview(rightBtn)
         rightBtn.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -63,11 +64,9 @@ extension NavigationBar {
             $0.height.width.equalTo(26)
         }
         rightBtn.setImage(image, for: .normal)
-        rightBtn.addTarget(targetVC, action: action, for: .touchUpInside)
     }
     
-    func configureRightBarBtn(targetVC: UIViewController, action: Selector, title: String) {
-        let rightBtn = UIButton()
+    func configureRightBarBtn(targetVC: UIViewController, title: String) {
         self.addSubview(rightBtn)
         rightBtn.snp.makeConstraints {
             $0.centerY.equalToSuperview()
@@ -77,7 +76,6 @@ extension NavigationBar {
         rightBtn.setTitle(title, for: .normal)
         rightBtn.setTitleColor(.label, for: .normal)
         rightBtn.titleLabel?.font = .KyoboHandwriting(size: 15)
-        rightBtn.addTarget(targetVC, action: action, for: .touchUpInside)
     }
 }
 

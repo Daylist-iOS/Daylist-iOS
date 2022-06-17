@@ -8,25 +8,93 @@
 import RxCocoa
 import RxSwift
 
-final class AddVM {
+protocol AddViewModelOutput: Lodable {
+    var emotions: Observable<[EmotionType]> { get }
     
-    func bindInput() {
-        
-    }
+    var onError: PublishSubject<APIError> { get }
     
-    func bindOutput() {
-        
+    var dataSource: Observable<[DataSourceEmotion]> { get }
+}
+
+extension AddViewModelOutput {
+    var dataSource: Observable<[DataSourceEmotion]> {
+        emotions
+            .map {
+                return [DataSourceEmotion(section: 0, items: $0)]
+            }
     }
 }
 
-// MARK: - Helpers
-
-extension HomeVM {}
+final class AddVM: BaseViewModel {
+    
+    var apiSession: APIService = APISession()
+    let apiError = PublishSubject<APIError>()
+    var bag = DisposeBag()
+    var input = Input()
+    var output = Output()
+    
+    // MARK: - Input
+    
+    struct Input {}
+    
+    // MARK: - Output
+    
+    struct Output: AddViewModelOutput {
+        var emotions = Observable<[EmotionType]>.from([EmotionType.allCases])
+        var onError = PublishSubject<APIError>()
+        var loading = BehaviorRelay<Bool>(value: false)
+        var addResponseSuccess = PublishSubject<Bool>()
+    }
+    
+    // MARK: - Init
+    
+    init() {
+        bindInput()
+        bindOutput()
+    }
+    
+    deinit {
+        bag = DisposeBag()
+    }
+}
 
 // MARK: - Input
 
-extension HomeVM {}
+extension AddVM {
+    func bindInput() {}
+}
 
 // MARK: - Output
 
-extension HomeVM {}
+extension AddVM {
+    func bindOutput() {}
+}
+
+// MARK: - Networking
+
+extension AddVM {
+    func postMediaData(with media: AddModel) {
+        let path = "/playlist"
+        let resource = urlResource<MediaResponse>(path: path)
+        if output.isLoading { return }
+        output.beginLoading()
+        
+        apiSession.postRequestWithImage(with: resource,
+                                        param: media.addParam,
+                                        image: media.thumbnailImage,
+                                        method: .post)
+        .withUnretained(self)
+        .subscribe(onNext: { owner, result in
+            owner.output.endLoading()
+            switch result {
+            case .failure(let error):
+                owner.apiError.onNext(error)
+                
+            case .success(let data):
+                dump(data)
+                owner.output.addResponseSuccess.onNext(true)
+            }
+        })
+        .disposed(by: bag)
+    }
+}

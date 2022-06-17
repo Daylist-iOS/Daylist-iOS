@@ -7,30 +7,84 @@
 
 import UIKit
 import RxCocoa
+import RxDataSources
 import RxGesture
 import RxSwift
 import SnapKit
 import Then
 import Photos
+import UITextView_Placeholder
 
 class AddVC: BaseViewController {
     private var player = CDPlayerView()
+    private var emotionCV = UICollectionView(frame: .zero, collectionViewLayout: .init())
+    private var searchView = UIView()
+    private var searchTextField = UITextField()
+        .then {
+            $0.font = .KyoboHandwriting(size: 15)
+            $0.placeholder = "URL"
+            $0.isEnabled = false
+        }
+    
+    private var searchIcon = UIImageView()
+        .then {
+            $0.image = UIImage(systemName: "link")
+            $0.tintColor = .black
+        }
+    
+    private var separator = UIView()
+        .then {
+            $0.backgroundColor = .gray
+        }
+    
+    private var postTitle = UITextField()
+        .then {
+            $0.font = .KyoboHandwriting(size: 20)
+            $0.placeholder = "제목"
+        }
+    
+    private var postContent = UITextView()
+        .then {
+            $0.font = .KyoboHandwriting(size: 15)
+            $0.textContainer.lineFragmentPadding = 0
+            $0.placeholder = "오늘은 어떤 영상을 보셨나요?"
+        }
+    
+    private var bag = DisposeBag()
+    private var viewModel = AddVM()
     private let naviBar = NavigationBar()
-    var imagePicker:UIImagePickerController!
+    private var imagePicker: UIImagePickerController!
+    private var myMedia: AddModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configurePlayer()
+    }
+    
+    override func configureView() {
+        super.configureView()
         configureNaviBar()
+        configurePlayer()
+        configureCollectionView()
+        configureSearchView()
+        configureContentView()
+    }
+    
+    override func layoutView() {
+        super.layoutView()
         configureLayout()
     }
     
     override func bindInput() {
         super.bindInput()
+        bindUI()
     }
     
     override func bindOutput() {
         super.bindOutput()
+        bindLoading()
+        bindOnError()
+        bindDataSource()
+        bindPopup()
     }
     
 }
@@ -41,17 +95,34 @@ extension AddVC {
     private func configureNaviBar() {
         naviBar.configureNaviBar(targetVC: self, title: "게시글 작성")
         naviBar.configureBackBtn(targetVC: self, action: #selector(dismissVC), naviType: .present)
-        naviBar.configureRightBarBtn(targetVC: self, action: #selector(asdf), title: "저장")
+        naviBar.configureRightBarBtn(targetVC: self, title: "저장")
     }
     
     private func configurePlayer() {
         player.configurePlayerBtn(playerType: .add, target: self, action: #selector(showGallery))
     }
     
-    // TODO: - 임시 화면 연결
-    @objc func asdf() {
-        let searchVC = YoutubeSearchVC()
-        navigationController?.pushViewController(searchVC, animated: true)
+    private func configureCollectionView() {
+        let cellWidth = (screenWidth - 50 - 80) / 5
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumInteritemSpacing = 20
+        layout.itemSize = CGSize(width: cellWidth , height: cellWidth / 50 * 76)
+        emotionCV = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        view.addSubview(emotionCV)
+        emotionCV.register(EmotionCVC.self, forCellWithReuseIdentifier: EmotionCVC.className)
+    }
+    
+    private func configureSearchView() {
+        view.addSubview(searchView)
+        searchView.addSubview(searchTextField)
+        searchView.addSubview(searchIcon)
+        searchView.addSubview(separator)
+    }
+    
+    private func configureContentView() {
+        view.addSubview(postTitle)
+        view.addSubview(postContent)
     }
 }
 
@@ -67,6 +138,49 @@ extension AddVC {
             $0.height.equalTo(player.snp.width).multipliedBy(287.0/260.0)
         }
         player.configureLayout(with: .add)
+        
+        emotionCV.snp.makeConstraints {
+            $0.top.equalTo(player.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().offset(25)
+            $0.trailing.equalToSuperview().offset(-25)
+            $0.height.equalTo(((screenWidth - 50 - 80) / 5) / 50 * 76)
+        }
+        
+        searchView.snp.makeConstraints {
+            $0.top.equalTo(emotionCV.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(25)
+            $0.trailing.equalToSuperview().offset(-25)
+            $0.height.equalTo(60)
+        }
+        
+        searchTextField.snp.makeConstraints {
+            $0.top.leading.bottom.equalToSuperview()
+        }
+        
+        searchIcon.snp.makeConstraints {
+            $0.centerY.trailing.equalToSuperview()
+            $0.leading.equalTo(searchTextField.snp.trailing).offset(4)
+            $0.width.height.equalTo(24)
+        }
+        
+        separator.snp.makeConstraints {
+            $0.height.equalTo(1)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        postTitle.snp.makeConstraints {
+            $0.top.equalTo(searchView.snp.bottom).offset(25)
+            $0.leading.equalToSuperview().offset(25)
+            $0.trailing.equalToSuperview().offset(-25)
+            $0.height.equalTo(20)
+        }
+        
+        postContent.snp.makeConstraints {
+            $0.top.equalTo(postTitle.snp.bottom).offset(8)
+            $0.leading.equalToSuperview().offset(25)
+            $0.trailing.equalToSuperview().offset(-25)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 }
 
@@ -109,13 +223,100 @@ extension AddVC {
 // MARK: - Input
 
 extension AddVC {
+    private func bindUI() {
+        let searchVC = YoutubeSearchVC()
+
+        searchView.rx.tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.navigationController?.pushViewController(searchVC, animated: true)
+            })
+            .disposed(by: bag)
     
+        searchVC.viewModel.media.asObservable()
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] media in
+                guard let self = self else { return }
+                self.myMedia = media
+                self.player.setThumbnailImage(with: media.thumbnailImage)
+                self.postTitle.text = media.title
+                self.searchTextField.text = media.mediaLink
+            })
+            .disposed(by: self.bag)
+        
+        naviBar.rightBtn.rx.tap
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                let media = AddModel(userId: 1,
+                                     title: self.postTitle.text ?? "",
+                                     description: self.postContent.text ?? "",
+                                     thumbnailImage: self.player.getThumbnailImage(),
+                                     mediaLink: self.myMedia?.mediaLink ?? "",
+                                     emotion: self.emotionCV.indexPathsForSelectedItems?.first?.row)
+                self.viewModel.postMediaData(with: media)
+            })
+            .disposed(by: bag)
+    }
 }
 
 // MARK: - Output
 
 extension AddVC {
+    private func bindLoading() {
+        viewModel.output.loading
+            .asDriver()
+            .drive(onNext: { [weak self] loading in
+                guard let self = self else { return }
+                self.loading(loading: loading)
+            })
+            .disposed(by: bag)
+    }
     
+    private func bindOnError() {
+        viewModel.output.onError
+            .asDriver(onErrorJustReturn: .unknown)
+            .drive(onNext: { [weak self] error in
+                guard let self = self else { return }
+                self.showErrorAlert(error.description)
+            })
+            .disposed(by: bag)
+    }
+    
+    private func bindDataSource() {
+        let dataSource = dataSource()
+        
+        viewModel.output.dataSource
+            .bind(to: emotionCV.rx.items(dataSource: dataSource))
+            .disposed(by: bag)
+    }
+    
+    private func bindPopup() {
+        viewModel.output.addResponseSuccess
+            .asDriver(onErrorJustReturn: true)
+            .drive { [weak self] _ in
+                guard let self = self else { return }
+                self.dismiss(animated: true) {
+                    // TODO: - 등록 팝업 추가
+                }
+            }
+            .disposed(by: bag)
+        
+        // TODO: - 모든 항목을 선택해주세요 팝업
+    }
+}
+
+// MARK: - DataSource
+
+extension AddVC {
+    private func dataSource() -> RxCollectionViewSectionedReloadDataSource<DataSourceEmotion> {
+        let dataSource = RxCollectionViewSectionedReloadDataSource<DataSourceEmotion> { _, collectionView, indexPath, emotionType in
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EmotionCVC.className, for: indexPath) as? EmotionCVC else { return UICollectionViewCell() }
+            cell.configureCell(with: emotionType)
+            return cell
+        }
+        return dataSource
+    }
 }
 
 //MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate

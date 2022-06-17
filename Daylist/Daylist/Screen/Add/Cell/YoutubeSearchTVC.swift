@@ -89,7 +89,7 @@ class YoutubeSearchTVC: UITableViewCell {
 extension YoutubeSearchTVC {
     func configureCell(with media: YoutubeItemResponse, with size: CGSize) {
         let processor = DownsamplingImageProcessor(size: size)
-        thumbnailImage.kf.setImage(with: media.snippet.thumbnails.thumbnailURL,
+        thumbnailImage.kf.setImage(with: URL(string: media.snippet.thumbnails.thumbnailURL ?? ""),
                                        placeholder: UIImage(),
                                        options: [
                                         .processor(processor),

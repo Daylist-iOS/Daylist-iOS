@@ -34,6 +34,8 @@ final class YoutubeSearchVM: BaseViewModel {
     var input = Input()
     var output = Output()
     
+    var media = PublishRelay<AddModel>()
+
     // MARK: - Input
     
     struct Input {}
@@ -74,8 +76,7 @@ extension YoutubeSearchVM {
 extension YoutubeSearchVM {
     func getSearchResult(with keyword: String) {
         if output.isLoading { return }
-
-        output.loading.accept(true)
+        output.beginLoading()
         
         var optionParams: Parameters {
             return [
@@ -88,15 +89,15 @@ extension YoutubeSearchVM {
             ]
         }
         
-        guard let url = URL(string:"https://www.googleapis.com/youtube/v3/search?") else { return }
-        let resource = urlResource<YoutubeListResponse>(url: url)
+        let url = "https://www.googleapis.com/youtube/v3/search?"
+        let resource = urlResource<YoutubeListResponse>(path: url)
         
-        apiSession.getRequest(with: resource, param: optionParams)
+        apiSession.youtubeSearchRequest(with: resource, param: optionParams)
             .withUnretained(self)
             .subscribe(onNext: { owner, result in
+                owner.output.endLoading()
                 switch result {
                 case .success(let data):
-                    owner.output.loading.accept(false)
                     let medias = data.items
                     owner.output.medias.accept(medias)
                 case .failure(let error):

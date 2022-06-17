@@ -70,6 +70,10 @@ extension CDPlayerView {
         playerCD.contentMode = .scaleAspectFill
         playerCD.image = image
     }
+    
+    func getThumbnailImage() -> UIImage {
+        return playerCD.image ?? UIImage()
+    }
 }
 
 // MARK: - Layout

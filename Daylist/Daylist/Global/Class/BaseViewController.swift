@@ -13,6 +13,11 @@ import Then
 import UIKit
 
 class BaseViewController: UIViewController {
+    
+    // MARK: Properties
+    let screenWidth = UIScreen.main.bounds.size.width
+    let screenHeight = UIScreen.main.bounds.size.height
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
