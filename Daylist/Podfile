@@ -18,5 +18,6 @@ target 'Daylist' do
   
   # Others
   pod 'Alamofire', '~> 5.5'
+  pod 'Kingfisher', '~> 7.0'
 
 end

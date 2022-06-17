@@ -13,19 +13,22 @@ struct urlResource<T: Decodable> {
 }
 
 struct APISession: APIService {
-    func getRequest<T>(with urlResource: urlResource<T>) -> Observable<Result<T, APIError>> where T : Decodable {
+    func getRequest<T>(with urlResource: urlResource<T>, param: Parameters?) -> Observable<Result<T, APIError>> where T : Decodable {
         
         return Observable<Result<T, APIError>>.create { observer in
             let headers: HTTPHeaders = [
                 "Content-Type": "application/json"
             ]
             
-            let task = AF.request(urlResource.url, headers: headers)
+            let task = AF.request(urlResource.url,
+                                  parameters: param,
+                                  encoding: URLEncoding.default,
+                                  headers: headers)
                 .validate(statusCode: 200...399)
                 .responseDecodable(of: T.self) { response in
                     switch response.result {
                     case .failure(let error):
-                        print(error.localizedDescription)
+                        dump(error)
                         
                         switch response.response?.statusCode {
                         case 409:

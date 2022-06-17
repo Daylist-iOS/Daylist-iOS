@@ -15,7 +15,7 @@ import Photos
 
 class AddVC: BaseViewController {
     private var player = CDPlayerView()
-    let naviBar = NavigationBar()
+    private let naviBar = NavigationBar()
     var imagePicker:UIImagePickerController!
     
     override func viewDidLoad() {
@@ -41,11 +41,17 @@ extension AddVC {
     private func configureNaviBar() {
         naviBar.configureNaviBar(targetVC: self, title: "게시글 작성")
         naviBar.configureBackBtn(targetVC: self, action: #selector(dismissVC), naviType: .present)
-        naviBar.configureRightBarBtn(targetVC: self, action: #selector(dismissVC), title: "저장")
+        naviBar.configureRightBarBtn(targetVC: self, action: #selector(asdf), title: "저장")
     }
     
     private func configurePlayer() {
         player.configurePlayerBtn(playerType: .add, target: self, action: #selector(showGallery))
+    }
+    
+    // TODO: - 임시 화면 연결
+    @objc func asdf() {
+        let searchVC = YoutubeSearchVC()
+        navigationController?.pushViewController(searchVC, animated: true)
     }
 }
 
