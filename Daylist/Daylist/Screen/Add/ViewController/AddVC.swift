@@ -81,8 +81,10 @@ class AddVC: BaseViewController {
     
     override func bindOutput() {
         super.bindOutput()
+        bindLoading()
         bindOnError()
         bindDataSource()
+        bindPopup()
     }
     
 }
@@ -93,7 +95,7 @@ extension AddVC {
     private func configureNaviBar() {
         naviBar.configureNaviBar(targetVC: self, title: "게시글 작성")
         naviBar.configureBackBtn(targetVC: self, action: #selector(dismissVC), naviType: .present)
-        naviBar.configureRightBarBtn(targetVC: self, action: #selector(dismissVC), title: "저장")
+        naviBar.configureRightBarBtn(targetVC: self, title: "저장")
     }
     
     private func configurePlayer() {
@@ -237,8 +239,7 @@ extension AddVC {
             .subscribe(onNext: { [weak self] media in
                 guard let self = self else { return }
                 self.myMedia = media
-                let thumbnailImage = try? Data(contentsOf: URL(string: media.thumbnailURL)!)
-                self.player.setThumbnailImage(with: UIImage(data: thumbnailImage!)!)
+                self.player.setThumbnailImage(with: media.thumbnailImage)
                 self.postTitle.text = media.title
                 self.searchTextField.text = media.mediaLink
             })
@@ -250,8 +251,8 @@ extension AddVC {
                 let media = AddModel(userId: 1,
                                      title: self.postTitle.text ?? "",
                                      description: self.postContent.text ?? "",
-                                     thumbnailURL: self.myMedia!.thumbnailURL,
-                                     mediaLink: self.myMedia!.mediaLink,
+                                     thumbnailImage: self.player.getThumbnailImage(),
+                                     mediaLink: self.myMedia?.mediaLink ?? "",
                                      emotion: self.emotionCV.indexPathsForSelectedItems?.first?.row)
                 self.viewModel.postMediaData(with: media)
             })
@@ -262,6 +263,16 @@ extension AddVC {
 // MARK: - Output
 
 extension AddVC {
+    private func bindLoading() {
+        viewModel.output.loading
+            .asDriver()
+            .drive(onNext: { [weak self] loading in
+                guard let self = self else { return }
+                self.loading(loading: loading)
+            })
+            .disposed(by: bag)
+    }
+    
     private func bindOnError() {
         viewModel.output.onError
             .asDriver(onErrorJustReturn: .unknown)
@@ -278,6 +289,20 @@ extension AddVC {
         viewModel.output.dataSource
             .bind(to: emotionCV.rx.items(dataSource: dataSource))
             .disposed(by: bag)
+    }
+    
+    private func bindPopup() {
+        viewModel.output.addResponseSuccess
+            .asDriver(onErrorJustReturn: true)
+            .drive { [weak self] _ in
+                guard let self = self else { return }
+                self.dismiss(animated: true) {
+                    // TODO: - 등록 팝업 추가
+                }
+            }
+            .disposed(by: bag)
+        
+        // TODO: - 모든 항목을 선택해주세요 팝업
     }
 }
 

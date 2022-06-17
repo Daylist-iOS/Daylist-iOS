@@ -12,6 +12,7 @@ import RxGesture
 import RxSwift
 import SnapKit
 import Then
+import Kingfisher
 
 final class YoutubeSearchVC: BaseViewController {
     var viewModel = YoutubeSearchVM()
@@ -145,13 +146,20 @@ extension YoutubeSearchVC {
         searchResultTV.rx.modelSelected(YoutubeItemResponse.self)
             .bind(onNext: { [weak self] media in
                 guard let self = self else { return }
-                self.viewModel.media.accept(AddModel(userId: 1,
-                                                     title: media.snippet.title,
-                                                     description: nil,
-                                                     thumbnailURL: media.snippet.thumbnails.thumbnailURL ?? "",
-                                                     mediaLink: "https://www.youtube.com/watch?v=\(media.id.videoId)",
-                                                     emotion: nil))
-                self.popVC()
+                KingfisherManager.shared.retrieveImage(with: URL(string: media.snippet.thumbnails.thumbnailURL ?? "")!) { image in
+                    switch image {
+                    case .success(let thumbnail):
+                        self.viewModel.media.accept(AddModel(userId: 1,
+                                                             title: media.snippet.title,
+                                                             description: nil,
+                                                             thumbnailImage: thumbnail.image,
+                                                             mediaLink: "https://www.youtube.com/watch?v=\(media.id.videoId)",
+                                                             emotion: nil))
+                    case .failure:
+                        return
+                    }
+                    self.popVC()
+                }
             })
             .disposed(by: bag)
     }

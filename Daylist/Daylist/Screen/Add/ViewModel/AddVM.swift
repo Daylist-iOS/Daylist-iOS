@@ -43,6 +43,7 @@ final class AddVM: BaseViewModel {
         var emotions = Observable<[EmotionType]>.from([EmotionType.allCases])
         var onError = PublishSubject<APIError>()
         var loading = BehaviorRelay<Bool>(value: false)
+        var addResponseSuccess = PublishSubject<Bool>()
     }
     
     // MARK: - Init
@@ -73,21 +74,27 @@ extension AddVM {
 
 extension AddVM {
     func postMediaData(with media: AddModel) {
-        let baseURL = "https://asia-northeast3-daylist-65de6.cloudfunctions.net/server/playlist"
-        let url = URL(string: baseURL)!
-        let resource = urlResource<String>(url: url)
+        let path = "/playlist"
+        let resource = urlResource<MediaResponse>(path: path)
+        if output.isLoading { return }
+        output.beginLoading()
         
-        apiSession.postRequest(with: resource, param: media.addParam)
-            .withUnretained(self)
-            .subscribe(onNext: { owner, result in
-                switch result {
-                case .failure(let error):
-                    owner.apiError.onNext(error)
-                    
-                case .success(let data):
-                    dump(data)
-                }
-            })
-            .disposed(by: bag)
+        apiSession.postRequestWithImage(with: resource,
+                                        param: media.addParam,
+                                        image: media.thumbnailImage,
+                                        method: .post)
+        .withUnretained(self)
+        .subscribe(onNext: { owner, result in
+            owner.output.endLoading()
+            switch result {
+            case .failure(let error):
+                owner.apiError.onNext(error)
+                
+            case .success(let data):
+                dump(data)
+                owner.output.addResponseSuccess.onNext(true)
+            }
+        })
+        .disposed(by: bag)
     }
 }
