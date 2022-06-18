@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23036499285DDFF6003739F2 /* EmbedSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23036498285DDFF6003739F2 /* EmbedSelectVC.swift */; };
 		235E9333285BAA8000531686 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9332285BAA8000531686 /* GenericResponse.swift */; };
 		235E9336285CA07700531686 /* MediaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9335285CA07700531686 /* MediaResponse.swift */; };
 		235E9338285CA1CB00531686 /* urlResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9337285CA1CB00531686 /* urlResource.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		23036498285DDFF6003739F2 /* EmbedSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedSelectVC.swift; sourceTree = "<group>"; };
 		235E9332285BAA8000531686 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		235E9335285CA07700531686 /* MediaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResponse.swift; sourceTree = "<group>"; };
 		235E9337285CA1CB00531686 /* urlResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = urlResource.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				237332362857306600D9814A /* AddNC.swift */,
 				237A683A2854938F00E6A890 /* AddVC.swift */,
 				2373321D2856FA2E00D9814A /* YoutubeSearchVC.swift */,
+				23036498285DDFF6003739F2 /* EmbedSelectVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -608,6 +611,7 @@
 				237A686228549AFC00E6A890 /* UIFont+.swift in Sources */,
 				237A68522854987500E6A890 /* NotificationCenter+.swift in Sources */,
 				237A682D28548E3000E6A890 /* BaseViewController.swift in Sources */,
+				23036499285DDFF6003739F2 /* EmbedSelectVC.swift in Sources */,
 				237A68582854992100E6A890 /* UITextView+.swift in Sources */,
 				23A933CF28577985009E4CEE /* EmotionCVC.swift in Sources */,
 				237332392857597500D9814A /* Bundle+.swift in Sources */,

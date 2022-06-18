@@ -230,7 +230,10 @@ extension AddVC {
             .when(.ended)
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.navigationController?.pushViewController(searchVC, animated: true)
+                let selectAlert = EmbedSelectVC()
+                selectAlert.modalPresentationStyle = .overFullScreen
+                selectAlert.baseVC = self
+                self.present(selectAlert, animated: false)
             })
             .disposed(by: bag)
     
