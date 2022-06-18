@@ -10,10 +10,9 @@ import RxSwift
 
 protocol AddViewModelOutput: Lodable {
     var emotions: Observable<[EmotionType]> { get }
-    
     var onError: PublishSubject<APIError> { get }
-    
     var dataSource: Observable<[DataSourceEmotion]> { get }
+    var media:  PublishRelay<AddModel> { get }
 }
 
 extension AddViewModelOutput {
@@ -44,6 +43,7 @@ final class AddVM: BaseViewModel {
         var onError = PublishSubject<APIError>()
         var loading = BehaviorRelay<Bool>(value: false)
         var addResponseSuccess = PublishSubject<Bool>()
+        var media = PublishRelay<AddModel>()
     }
     
     // MARK: - Init

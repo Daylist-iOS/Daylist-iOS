@@ -46,7 +46,7 @@ class EmbedSelectVC: BaseViewController {
         }
     
     private let bag = DisposeBag()
-    var baseVC: AddVC?
+    var addVC: AddVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,7 +153,8 @@ extension EmbedSelectVC {
                 guard let self = self else { return }
                 self.dismiss(animated: false) {
                     let searchVC = YoutubeSearchVC()
-                    self.baseVC?.navigationController?.pushViewController(searchVC, animated: true)
+                    searchVC.addVC = self.addVC
+                    self.addVC?.navigationController?.pushViewController(searchVC, animated: true)
                 }
             })
             .disposed(by: bag)

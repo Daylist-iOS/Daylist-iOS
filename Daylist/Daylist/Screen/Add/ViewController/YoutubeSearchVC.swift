@@ -15,10 +15,11 @@ import Then
 import Kingfisher
 
 final class YoutubeSearchVC: BaseViewController {
-    var viewModel = YoutubeSearchVM()
+    private var viewModel = YoutubeSearchVM()
     private var bag = DisposeBag()
     private let naviBar = NavigationBar()
     private var media: AddModel?
+    var addVC: AddVC?
     
     private var searchTextField = UITextField()
         .then {
@@ -149,12 +150,12 @@ extension YoutubeSearchVC {
                 KingfisherManager.shared.retrieveImage(with: URL(string: media.snippet.thumbnails.thumbnailURL ?? "")!) { image in
                     switch image {
                     case .success(let thumbnail):
-                        self.viewModel.media.accept(AddModel(userId: 1,
-                                                             title: media.snippet.title,
-                                                             description: nil,
-                                                             thumbnailImage: thumbnail.image,
-                                                             mediaLink: "https://www.youtube.com/watch?v=\(media.id.videoId)",
-                                                             emotion: nil))
+                        self.addVC?.viewModel.output.media.accept(AddModel(userId: 1,
+                                                                           title: media.snippet.title,
+                                                                           description: nil,
+                                                                           thumbnailImage: thumbnail.image,
+                                                                           mediaLink: "https://www.youtube.com/watch?v=\(media.id.videoId)",
+                                                                           emotion: nil))
                     case .failure:
                         return
                     }
