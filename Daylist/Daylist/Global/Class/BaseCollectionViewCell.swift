@@ -9,4 +9,17 @@ import UIKit
 
 class BaseCollectionViewCell: UICollectionViewCell {
     
+    // MARK: init
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    func setupViews() {}
 }
