@@ -64,4 +64,13 @@ extension CDPlayerType {
             return UIImage(named: "Edit")!
         }
     }
+    
+    var playerBackgroundColor: UIColor {
+        switch self {
+        case .home:
+            return .white
+        default:
+            return .playerBase
+        }
+    }
 }
