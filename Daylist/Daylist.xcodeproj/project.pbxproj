@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		23036499285DDFF6003739F2 /* EmbedSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23036498285DDFF6003739F2 /* EmbedSelectVC.swift */; };
+		2303649B285E06C7003739F2 /* EmbedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2303649A285E06C7003739F2 /* EmbedVC.swift */; };
 		235E9333285BAA8000531686 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9332285BAA8000531686 /* GenericResponse.swift */; };
 		235E9336285CA07700531686 /* MediaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9335285CA07700531686 /* MediaResponse.swift */; };
 		235E9338285CA1CB00531686 /* urlResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9337285CA1CB00531686 /* urlResource.swift */; };
@@ -65,6 +66,7 @@
 
 /* Begin PBXFileReference section */
 		23036498285DDFF6003739F2 /* EmbedSelectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedSelectVC.swift; sourceTree = "<group>"; };
+		2303649A285E06C7003739F2 /* EmbedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedVC.swift; sourceTree = "<group>"; };
 		235E9332285BAA8000531686 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		235E9335285CA07700531686 /* MediaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResponse.swift; sourceTree = "<group>"; };
 		235E9337285CA1CB00531686 /* urlResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = urlResource.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 				237A683A2854938F00E6A890 /* AddVC.swift */,
 				2373321D2856FA2E00D9814A /* YoutubeSearchVC.swift */,
 				23036498285DDFF6003739F2 /* EmbedSelectVC.swift */,
+				2303649A285E06C7003739F2 /* EmbedVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				2373323128571D0900D9814A /* Input.swift in Sources */,
 				237A68542854989500E6A890 /* UIView+.swift in Sources */,
 				237A683D285493B300E6A890 /* AddVM.swift in Sources */,
+				2303649B285E06C7003739F2 /* EmbedVC.swift in Sources */,
 				2373321C28565BF200D9814A /* UIColor+.swift in Sources */,
 				237A6843285493ED00E6A890 /* SettingVM.swift in Sources */,
 				237A6849285494F100E6A890 /* APIError.swift in Sources */,

@@ -143,7 +143,11 @@ extension EmbedSelectVC {
             .asDriver()
             .drive(onNext: {[weak self] _ in
                 guard let self = self else { return }
-                print("embed")
+                self.dismiss(animated: false) {
+                    let embedVC = EmbedVC()
+                    embedVC.modalPresentationStyle = .overFullScreen
+                    self.addVC?.present(embedVC, animated: false)
+                }
             })
             .disposed(by: bag)
         
