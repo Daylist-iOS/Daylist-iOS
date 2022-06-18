@@ -14,6 +14,7 @@ class EmotionCVC: UICollectionViewCell {
         .then {
             $0.contentMode = .scaleAspectFill
             $0.tintColor = .lightGray
+            $0.contentMode = .scaleAspectFit
         }
     
     var emotionTitle = UILabel()
@@ -56,14 +57,9 @@ class EmotionCVC: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet{
-            if isSelected {
-                emoji.tintColor = emotionType?.emotionTintColor
-                emotionTitle.textColor = emotionType?.emotionTintColor
-            }
-            else {
-                emoji.tintColor = .lightGray
-                emotionTitle.textColor = .lightGray
-            }
+            emoji.tintColor = isSelected ? emotionType?.emotionTintColor : .lightGray
+            emotionTitle.textColor = isSelected ? emotionType?.emotionTintColor : .lightGray
+            emoji.image = isSelected ? emotionType?.emotionImage : emotionType?.emotionUnselectedImage
         }
     }
 }
@@ -73,7 +69,7 @@ class EmotionCVC: UICollectionViewCell {
 extension EmotionCVC {
     func configureCell(with emotion: EmotionType) {
         emotionType = emotion
-        emoji.image = emotion.emotionImage.withRenderingMode(.alwaysTemplate)
+        emoji.image = isSelected ? emotion.emotionImage : emotion.emotionUnselectedImage
         emotionTitle.text = emotion.emotionTitle
     }
 }
