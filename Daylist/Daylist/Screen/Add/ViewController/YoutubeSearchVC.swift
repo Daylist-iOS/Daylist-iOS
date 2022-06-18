@@ -12,13 +12,11 @@ import RxGesture
 import RxSwift
 import SnapKit
 import Then
-import Kingfisher
 
 final class YoutubeSearchVC: BaseViewController {
     private var viewModel = YoutubeSearchVM()
     private var bag = DisposeBag()
     private let naviBar = NavigationBar()
-    private var media: AddModel?
     var addVC: AddVC?
     
     private var searchTextField = UITextField()
@@ -147,20 +145,10 @@ extension YoutubeSearchVC {
         searchResultTV.rx.modelSelected(YoutubeItemResponse.self)
             .bind(onNext: { [weak self] media in
                 guard let self = self else { return }
-                KingfisherManager.shared.retrieveImage(with: URL(string: media.snippet.thumbnails.thumbnailURL ?? "")!) { image in
-                    switch image {
-                    case .success(let thumbnail):
-                        self.addVC?.viewModel.output.media.accept(AddModel(userId: 1,
-                                                                           title: media.snippet.title,
-                                                                           description: nil,
-                                                                           thumbnailImage: thumbnail.image,
-                                                                           mediaLink: "https://www.youtube.com/watch?v=\(media.id.videoId)",
-                                                                           emotion: nil))
-                    case .failure:
-                        return
-                    }
-                    self.popVC()
-                }
+                self.addVC?.viewModel.output.media.accept(EmbedModel(title: media.snippet.title,
+                                                                     thumbnailURL: media.snippet.thumbnails.thumbnailURL ?? "",
+                                                                     mediaURL: "https://www.youtube.com/watch?v=\(media.id.videoId)"))
+                self.popVC()
             })
             .disposed(by: bag)
     }

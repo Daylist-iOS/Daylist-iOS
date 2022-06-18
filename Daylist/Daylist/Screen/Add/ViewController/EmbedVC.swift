@@ -72,6 +72,9 @@ class EmbedVC: BaseViewController {
         }
     
     private let bag = DisposeBag()
+    private let viewModel = EmbedVM()
+    private var media: EmbedModel?
+    var addVC: AddVC?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +93,7 @@ class EmbedVC: BaseViewController {
     
     override func bindInput() {
         super.bindInput()
+        bindSearchTextField()
         bindButtonAction()
     }
     
@@ -109,13 +113,9 @@ extension EmbedVC {
     
     private func configureEmbedView() {
         view.addSubview(baseView)
-        baseView.addSubview(searchTextField)
-        baseView.addSubview(separator)
-        baseView.addSubview(messageLabel)
-        baseView.addSubview(stackView)
+        baseView.addSubviews([searchTextField, separator, messageLabel, stackView, resultView])
         stackView.addArrangedSubview(cancelBtn)
         stackView.addArrangedSubview(confirmBtn)
-        baseView.addSubview(resultView)
     }
 }
 
@@ -177,8 +177,19 @@ extension EmbedVC {
         confirmBtn.rx.tap
             .asDriver()
             .drive(onNext: {[weak self] _ in
-                guard let self = self else { return }
+                guard let self = self, let media = self.media else { return }
+                self.addVC?.viewModel.output.media.accept(media)
                 self.dismiss(animated: false)
+            })
+            .disposed(by: bag)
+    }
+    
+    private func bindSearchTextField() {
+        searchTextField.rx.text
+            .distinctUntilChanged()
+            .subscribe(onNext: {[weak self] url in
+                guard let self = self else { return }
+                self.viewModel.getURLMetaData(with: url ?? "")
             })
             .disposed(by: bag)
     }
@@ -187,5 +198,22 @@ extension EmbedVC {
 // MARK: - Output
 
 extension EmbedVC {
-    
+    private func bindResultView() {
+        viewModel.output.media.asObservable()
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {[weak self] media in
+                guard let self = self else { return }
+                self.resultView.configureResultView(with: media)
+                self.media = media
+            })
+            .disposed(by: bag)
+        
+        viewModel.output.isURLValid
+            .subscribe(onNext: {[weak self] isValid in
+                guard let self = self else { return }
+                self.resultView.isHidden = !isValid
+                self.confirmBtn.isUserInteractionEnabled = isValid
+            })
+            .disposed(by: bag)
+    }
 }

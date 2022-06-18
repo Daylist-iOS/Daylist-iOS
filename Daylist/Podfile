@@ -20,5 +20,6 @@ target 'Daylist' do
   pod 'Alamofire', '~> 5.5'
   pod 'Kingfisher', '~> 7.0'
   pod 'UITextView+Placeholder'
+  pod 'SwiftSoup'
 
 end

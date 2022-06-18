@@ -14,6 +14,7 @@ import SnapKit
 import Then
 import Photos
 import UITextView_Placeholder
+import Kingfisher
 
 class AddVC: BaseViewController {
     private var player = CDPlayerView()
@@ -54,7 +55,7 @@ class AddVC: BaseViewController {
     private var bag = DisposeBag()
     private let naviBar = NavigationBar()
     private var imagePicker: UIImagePickerController!
-    private var myMedia: AddModel?
+    private var embedMedia: EmbedModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -239,10 +240,18 @@ extension AddVC {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] media in
                 guard let self = self else { return }
-                self.myMedia = media
-                self.player.setThumbnailImage(with: media.thumbnailImage)
+                self.embedMedia = media
                 self.postTitle.text = media.title
-                self.searchTextField.text = media.mediaLink
+                self.searchTextField.text = media.mediaURL
+                guard let thumbnailURL = URL(string: media.thumbnailURL) else { return }
+                KingfisherManager.shared.retrieveImage(with: thumbnailURL) { image in
+                    switch image {
+                    case .success(let thumbnail):
+                        self.player.setThumbnailImage(with: thumbnail.image)
+                    case .failure:
+                        return
+                    }
+                }
             })
             .disposed(by: self.bag)
         
@@ -253,7 +262,7 @@ extension AddVC {
                                      title: self.postTitle.text ?? "",
                                      description: self.postContent.text ?? "",
                                      thumbnailImage: self.player.getThumbnailImage(),
-                                     mediaLink: self.myMedia?.mediaLink ?? "",
+                                     mediaLink: self.embedMedia?.mediaURL ?? "",
                                      emotion: self.emotionCV.indexPathsForSelectedItems?.first?.row)
                 self.viewModel.postMediaData(with: media)
             })

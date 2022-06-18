@@ -146,6 +146,7 @@ extension EmbedSelectVC {
                 self.dismiss(animated: false) {
                     let embedVC = EmbedVC()
                     embedVC.modalPresentationStyle = .overFullScreen
+                    embedVC.addVC = self.addVC
                     self.addVC?.present(embedVC, animated: false)
                 }
             })
