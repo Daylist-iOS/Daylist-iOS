@@ -75,12 +75,6 @@ class EmbedSelectVC: BaseViewController {
     
 }
 
-// MARK: - Helpers
-
-extension EmbedSelectVC {
-    
-}
-
 // MARK: - Configure
 
 extension EmbedSelectVC {
