@@ -34,30 +34,45 @@ extension EmotionType {
     var emotionTintColor: UIColor {
         switch self {
         case .happy:
-            return UIColor.red
+            return .emotionHappy
         case .flutter:
-            return UIColor.systemPink
+            return .emotionFlutter
         case .comfortable:
-            return UIColor.green
+            return .emotionComfortable
         case .notGood:
-            return UIColor.darkGray
+            return .emotionNotGood
         case .sad:
-            return UIColor.blue
+            return .emotionSad
         }
     }
     
     var emotionImage: UIImage {
         switch self {
         case .happy:
-            return UIImage(named: "EmotionUnSelected") ?? UIImage()
+            return UIImage(named: "Happy") ?? UIImage()
         case .flutter:
-            return UIImage(named: "EmotionUnSelected") ?? UIImage()
+            return UIImage(named: "Flutter") ?? UIImage()
         case .comfortable:
-            return UIImage(named: "EmotionUnSelected") ?? UIImage()
+            return UIImage(named: "Comfortable") ?? UIImage()
         case .notGood:
-            return UIImage(named: "EmotionUnSelected") ?? UIImage()
+            return UIImage(named: "NotGood") ?? UIImage()
         case .sad:
-            return UIImage(named: "EmotionUnSelected") ?? UIImage()
+            return UIImage(named: "Sad") ?? UIImage()
+        }
+    }
+    
+    var emotionUnselectedImage: UIImage {
+        switch self {
+        case .happy:
+            return UIImage(named: "Happy_UnSelected") ?? UIImage()
+        case .flutter:
+            return UIImage(named: "Flutter_UnSelected") ?? UIImage()
+        case .comfortable:
+            return UIImage(named: "Comfortable_UnSelected") ?? UIImage()
+        case .notGood:
+            return UIImage(named: "NotGood_UnSelected") ?? UIImage()
+        case .sad:
+            return UIImage(named: "Sad_UnSelected") ?? UIImage()
         }
     }
     

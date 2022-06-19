@@ -33,8 +33,6 @@ final class YoutubeSearchVM: BaseViewModel {
     var bag = DisposeBag()
     var input = Input()
     var output = Output()
-    
-    var media = PublishRelay<AddModel>()
 
     // MARK: - Input
     

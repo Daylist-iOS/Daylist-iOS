@@ -102,6 +102,19 @@ extension YoutubeSearchTVC {
         channelTitleLabel.text = media.snippet.channelTitle
         youtubeURLLabel.text = "https://www.youtube.com/watch?v=\(media.id.videoId)"
     }
+    
+    func configureResultView(with media: EmbedModel) {
+        backgroundColor = .white
+        thumbnailImage.kf.setImage(with: URL(string: media.thumbnailURL),
+                                       placeholder: UIImage(),
+                                       options: [
+                                        .scaleFactor(UIScreen.main.scale),
+                                        .cacheOriginalImage,
+                                       ])
+        thumbnailImage.contentMode = .scaleAspectFill
+        titleLabel.text = media.title
+        youtubeURLLabel.text = media.mediaURL
+    }
 }
 
 // MARK: - Configure
