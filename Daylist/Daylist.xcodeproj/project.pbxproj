@@ -12,6 +12,10 @@
 		2303649D285E2AC7003739F2 /* EmbedVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2303649C285E2AC7003739F2 /* EmbedVM.swift */; };
 		2303649F285E3050003739F2 /* EmbedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2303649E285E3050003739F2 /* EmbedModel.swift */; };
 		230364A1285EF343003739F2 /* SettingNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364A0285EF343003739F2 /* SettingNC.swift */; };
+		230364A3285F0514003739F2 /* LockVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364A2285F0514003739F2 /* LockVC.swift */; };
+		230364A6285F0F3D003739F2 /* KeypadCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364A5285F0F3D003739F2 /* KeypadCVC.swift */; };
+		230364AA285F12F9003739F2 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364A9285F12F9003739F2 /* UIDevice+.swift */; };
+		230364AC285F18B0003739F2 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364AB285F18B0003739F2 /* UserDefaults+.swift */; };
 		235E9333285BAA8000531686 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9332285BAA8000531686 /* GenericResponse.swift */; };
 		235E9336285CA07700531686 /* MediaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9335285CA07700531686 /* MediaResponse.swift */; };
 		235E9338285CA1CB00531686 /* urlResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9337285CA1CB00531686 /* urlResource.swift */; };
@@ -73,6 +77,10 @@
 		2303649C285E2AC7003739F2 /* EmbedVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedVM.swift; sourceTree = "<group>"; };
 		2303649E285E3050003739F2 /* EmbedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbedModel.swift; sourceTree = "<group>"; };
 		230364A0285EF343003739F2 /* SettingNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNC.swift; sourceTree = "<group>"; };
+		230364A2285F0514003739F2 /* LockVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockVC.swift; sourceTree = "<group>"; };
+		230364A5285F0F3D003739F2 /* KeypadCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadCVC.swift; sourceTree = "<group>"; };
+		230364A9285F12F9003739F2 /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
+		230364AB285F18B0003739F2 /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		235E9332285BAA8000531686 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		235E9335285CA07700531686 /* MediaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResponse.swift; sourceTree = "<group>"; };
 		235E9337285CA1CB00531686 /* urlResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = urlResource.swift; sourceTree = "<group>"; };
@@ -144,6 +152,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		230364A4285F0F2B003739F2 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				230364A5285F0F3D003739F2 /* KeypadCVC.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		235E9334285CA05B00531686 /* PublicModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -206,6 +222,8 @@
 				237A686128549AFC00E6A890 /* UIFont+.swift */,
 				2373321B28565BF200D9814A /* UIColor+.swift */,
 				237332382857597500D9814A /* Bundle+.swift */,
+				230364A9285F12F9003739F2 /* UIDevice+.swift */,
+				230364AB285F18B0003739F2 /* UserDefaults+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -332,6 +350,7 @@
 				23AAFC00285484B900D7801A /* Model */,
 				23AAFBFF285484B400D7801A /* ViewController */,
 				23AAFBFE285484AD00D7801A /* ViewModel */,
+				230364A4285F0F2B003739F2 /* Cell */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -429,6 +448,7 @@
 			children = (
 				230364A0285EF343003739F2 /* SettingNC.swift */,
 				237A6840285493E600E6A890 /* SettingVC.swift */,
+				230364A2285F0514003739F2 /* LockVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -587,6 +607,7 @@
 				237A683F285493DB00E6A890 /* SettingModel.swift in Sources */,
 				2373322D2857103100D9814A /* DataSourceMedia.swift in Sources */,
 				2373323328571D2100D9814A /* Output.swift in Sources */,
+				230364A3285F0514003739F2 /* LockVC.swift in Sources */,
 				2373322928570E9800D9814A /* YoutubeListResponse.swift in Sources */,
 				237A684B2854950100E6A890 /* APIService.swift in Sources */,
 				23A933CD28577209009E4CEE /* LoadingView.swift in Sources */,
@@ -609,11 +630,13 @@
 				237A686B2855D89A00E6A890 /* NaviType.swift in Sources */,
 				237A6878285624EB00E6A890 /* CDPlayerType.swift in Sources */,
 				237A682B28548E0D00E6A890 /* BaseView.swift in Sources */,
+				230364A6285F0F3D003739F2 /* KeypadCVC.swift in Sources */,
 				235E9338285CA1CB00531686 /* urlResource.swift in Sources */,
 				2303649F285E3050003739F2 /* EmbedModel.swift in Sources */,
 				237A684D2854951C00E6A890 /* APISession.swift in Sources */,
 				23A933CA285771B9009E4CEE /* Loadable.swift in Sources */,
 				23A933D3285793D4009E4CEE /* DataSourceEmotion.swift in Sources */,
+				230364AC285F18B0003739F2 /* UserDefaults+.swift in Sources */,
 				237A68762855DCE400E6A890 /* CDPlayerView.swift in Sources */,
 				237A6856285498FB00E6A890 /* UITextField+.swift in Sources */,
 				237A6841285493E600E6A890 /* SettingVC.swift in Sources */,
@@ -637,6 +660,7 @@
 				2373321C28565BF200D9814A /* UIColor+.swift in Sources */,
 				237A6843285493ED00E6A890 /* SettingVM.swift in Sources */,
 				237A6849285494F100E6A890 /* APIError.swift in Sources */,
+				230364AA285F12F9003739F2 /* UIDevice+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
