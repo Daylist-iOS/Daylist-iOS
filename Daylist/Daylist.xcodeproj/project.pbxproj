@@ -18,6 +18,7 @@
 		230364AC285F18B0003739F2 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364AB285F18B0003739F2 /* UserDefaults+.swift */; };
 		230364B0285F1F19003739F2 /* LockSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364AF285F1F19003739F2 /* LockSettingVC.swift */; };
 		230364B2285F3368003739F2 /* LockType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364B1285F3368003739F2 /* LockType.swift */; };
+		230D7333285F7F8000582792 /* LockVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230D7332285F7F8000582792 /* LockVM.swift */; };
 		235E9333285BAA8000531686 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9332285BAA8000531686 /* GenericResponse.swift */; };
 		235E9336285CA07700531686 /* MediaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9335285CA07700531686 /* MediaResponse.swift */; };
 		235E9338285CA1CB00531686 /* urlResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9337285CA1CB00531686 /* urlResource.swift */; };
@@ -85,6 +86,7 @@
 		230364AB285F18B0003739F2 /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		230364AF285F1F19003739F2 /* LockSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockSettingVC.swift; sourceTree = "<group>"; };
 		230364B1285F3368003739F2 /* LockType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockType.swift; sourceTree = "<group>"; };
+		230D7332285F7F8000582792 /* LockVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockVM.swift; sourceTree = "<group>"; };
 		235E9332285BAA8000531686 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		235E9335285CA07700531686 /* MediaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResponse.swift; sourceTree = "<group>"; };
 		235E9337285CA1CB00531686 /* urlResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = urlResource.swift; sourceTree = "<group>"; };
@@ -444,6 +446,7 @@
 			isa = PBXGroup;
 			children = (
 				237A6842285493ED00E6A890 /* SettingVM.swift */,
+				230D7332285F7F8000582792 /* LockVM.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				237A683528548FDC00E6A890 /* HomeVM.swift in Sources */,
 				237332252857087100D9814A /* YoutubeItemResponse.swift in Sources */,
 				2303649D285E2AC7003739F2 /* EmbedVM.swift in Sources */,
+				230D7333285F7F8000582792 /* LockVM.swift in Sources */,
 				237A68502854984800E6A890 /* UILabel+.swift in Sources */,
 				237A685A2854996900E6A890 /* UIButton+.swift in Sources */,
 				230364A1285EF343003739F2 /* SettingNC.swift in Sources */,

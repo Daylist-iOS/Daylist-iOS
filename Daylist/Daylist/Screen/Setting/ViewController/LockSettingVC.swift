@@ -52,10 +52,17 @@ class LockSettingVC: BaseViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureLockSwitch()
+        hideViewLayout(isHidden: !lockSwitch.isOn)
+    }
+    
     override func configureView() {
         super.configureView()
         configureNaviBar()
         configureContentView()
+        configureLockSwitch()
     }
     
     override func layoutView() {
@@ -91,6 +98,10 @@ extension LockSettingVC {
         lockView.addSubview(lockSwitch)
         view.addSubview(warningMessage)
         hideView.addSubview(changePasswdBtn)
+    }
+    
+    private func configureLockSwitch() {
+        lockSwitch.isOn = UserDefaults.standard.string(forKey: UserDefaults.Keys.lockPasswd) != nil
     }
 }
 
@@ -188,7 +199,7 @@ extension LockSettingVC {
         if lockSwitch.isOn {
             let lockVC = LockVC()
             lockVC.lockType = .changePW
-            lockVC.modalPresentationStyle = .overFullScreen
+            lockVC.modalPresentationStyle = .fullScreen
             present(lockVC, animated: true)
         } else {
             UserDefaults.standard.set(nil, forKey: UserDefaults.Keys.lockPasswd)

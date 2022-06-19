@@ -38,10 +38,12 @@ class LockVC: BaseViewController {
         }
     
     private var keypadCV = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    private var inputPasswd = [Int]()
     private let bag = DisposeBag()
-    private var passwdTmp = [Int]()
+    private let viewModel = LockVM()
+    private var inputPasswd = ""
+    private var passwdTmp = ""
     var lockType: LockType?
+    private let naviBar = NavigationBar()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +51,7 @@ class LockVC: BaseViewController {
     
     override func configureView() {
         super.configureView()
+        configureNaviBar()
         configureTitle()
         configurePasswdStackView()
         configureCollectionView()
@@ -66,43 +69,19 @@ class LockVC: BaseViewController {
     
     override func bindOutput() {
         super.bindOutput()
-    }
-    
-}
-
-// MARK: - Animation
-
-extension LockVC {
-    private func wrongAnimation() {
-        self.passwdLayout(leading: 91, triling: -111)
-        UIView.animate(withDuration:0.1,
-                       delay: 0,
-                       options: [.curveEaseInOut, .autoreverse, .repeat]) {
-            self.view.isUserInteractionEnabled = false
-             UIView.modifyAnimations(withRepeatCount: 2, autoreverses: true) {
-                 self.passwdLayout(leading: 111, triling: -91)
-             }
-        } completion: { _ in
-            self.view.isUserInteractionEnabled = true
-            self.message.text = self.lockType?.message
-            self.passwdLayout(leading: 101, triling: -101)
-            self.clearPW()
-        }
-        message.text = "암호가 일치하지 않습니다."
-    }
-    
-    private func passwdLayout(leading: CGFloat, triling: CGFloat) {
-        self.passwdStackView.snp.updateConstraints {
-            $0.leading.equalToSuperview().offset(leading)
-            $0.trailing.equalToSuperview().offset(triling)
-        }
-        self.view.layoutIfNeeded()
+        bindValidPW()
     }
 }
 
 // MARK: - Configure
 
 extension LockVC {
+    private func configureNaviBar() {
+        naviBar.isHidden = lockType == .enter
+        naviBar.configureNaviBar(targetVC: self, title: "")
+        naviBar.configureBackBtn(targetVC: self, action: #selector(dismissVC), naviType: .present)
+    }
+    
     private func configureTitle() {
         view.addSubviews([viewTitle, message])
         message.text = lockType?.message
@@ -163,6 +142,14 @@ extension LockVC {
             $0.bottom.equalToSuperview().offset(-66)
         }
     }
+    
+    private func passwdLayout(leading: CGFloat, triling: CGFloat) {
+        passwdStackView.snp.updateConstraints {
+            $0.leading.equalToSuperview().offset(leading)
+            $0.trailing.equalToSuperview().offset(triling)
+        }
+        view.layoutIfNeeded()
+    }
 }
 
 // MARK: - Input
@@ -177,16 +164,50 @@ extension LockVC {
                 switch indexPath.row {
                 case 0..<9, 10:
                     self.configurePWImage(with: UIImage(named: "passwdFilled")!)
-                    self.inputPasswd.append(Int(cell.number.text!)!)
+                    self.inputPasswd += cell.number.text!
                 case 11:
-                    self.configurePWImage(with: UIImage(named: "passwdNull")!)
                     self.inputPasswd.removeLast()
+                    self.configurePWImage(with: UIImage(named: "passwdNull")!)
                 default:
                     return
                 }
                 
                 if self.inputPasswd.count == 4 {
                     self.checkPW()
+                }
+            })
+            .disposed(by: bag)
+    }
+    
+    private func checkPW() {
+        switch lockType {
+        case .enter:
+            viewModel.input.enterPW.onNext(self.inputPasswd)
+        case .changePW:
+            passwdTmp = inputPasswd
+            clearPW()
+            lockType = .checkPW
+            message.text = lockType?.message
+        case .checkPW:
+            viewModel.input.changePW.onNext([self.inputPasswd, self.passwdTmp])
+        default:
+            break
+        }
+    }
+}
+
+// MARK: - Output
+
+extension LockVC {
+    private func bindValidPW() {
+        viewModel.output.isValidPW
+            .subscribe(onNext: {[weak self] isValid in
+                guard let self = self else { return }
+                if isValid {
+                    self.dismiss(animated: true)
+                } else {
+                    self.wrongAnimation()
+                    UIDevice.vibrate()
                 }
             })
             .disposed(by: bag)
@@ -203,31 +224,27 @@ extension LockVC {
             passwd.image = UIImage(named: "passwdNull")
         }
     }
-    
-    private func comparePasswd(with input: String) {
-        if inputPasswd.map({"\($0)"}).joined() == input {
-            dismiss(animated: true)
-            if lockType == .checkPW { UserDefaults.standard.set(input, forKey: UserDefaults.Keys.lockPasswd) }
-        } else {
-            wrongAnimation()
-            UIDevice.vibrate()
+}
+
+// MARK: - Animation
+
+extension LockVC {
+    private func wrongAnimation() {
+        self.passwdLayout(leading: 91, triling: -111)
+        UIView.animate(withDuration:0.1,
+                       delay: 0,
+                       options: [.curveEaseInOut, .autoreverse, .repeat]) {
+            self.view.isUserInteractionEnabled = false
+             UIView.modifyAnimations(withRepeatCount: 2, autoreverses: true) {
+                 self.passwdLayout(leading: 111, triling: -91)
+             }
+        } completion: { _ in
+            self.view.isUserInteractionEnabled = true
+            self.message.text = self.lockType?.message
+            self.passwdLayout(leading: 101, triling: -101)
+            self.clearPW()
         }
-    }
-    
-    private func checkPW() {
-        switch lockType {
-        case .enter:
-            comparePasswd(with: UserDefaults.standard.string(forKey: UserDefaults.Keys.lockPasswd) ?? "")
-        case .changePW:
-            passwdTmp = inputPasswd
-            clearPW()
-            lockType = .checkPW
-            message.text = lockType?.message
-        case .checkPW:
-            self.comparePasswd(with: self.passwdTmp.map({"\($0)"}).joined())
-        default:
-            break
-        }
+        message.text = "암호가 일치하지 않습니다."
     }
 }
 
