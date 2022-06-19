@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
 //        let rootViewcontroller = UINavigationController(rootViewController: HomeVC())
-        let rootViewcontroller = AddNC()
+        let rootViewcontroller = SettingNC()
         
         window?.rootViewController = rootViewcontroller
         
