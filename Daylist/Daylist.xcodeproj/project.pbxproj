@@ -16,6 +16,7 @@
 		230364A6285F0F3D003739F2 /* KeypadCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364A5285F0F3D003739F2 /* KeypadCVC.swift */; };
 		230364AA285F12F9003739F2 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364A9285F12F9003739F2 /* UIDevice+.swift */; };
 		230364AC285F18B0003739F2 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364AB285F18B0003739F2 /* UserDefaults+.swift */; };
+		230364B0285F1F19003739F2 /* LockSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364AF285F1F19003739F2 /* LockSettingVC.swift */; };
 		235E9333285BAA8000531686 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9332285BAA8000531686 /* GenericResponse.swift */; };
 		235E9336285CA07700531686 /* MediaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9335285CA07700531686 /* MediaResponse.swift */; };
 		235E9338285CA1CB00531686 /* urlResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9337285CA1CB00531686 /* urlResource.swift */; };
@@ -81,6 +82,7 @@
 		230364A5285F0F3D003739F2 /* KeypadCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeypadCVC.swift; sourceTree = "<group>"; };
 		230364A9285F12F9003739F2 /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		230364AB285F18B0003739F2 /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
+		230364AF285F1F19003739F2 /* LockSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockSettingVC.swift; sourceTree = "<group>"; };
 		235E9332285BAA8000531686 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		235E9335285CA07700531686 /* MediaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResponse.swift; sourceTree = "<group>"; };
 		235E9337285CA1CB00531686 /* urlResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = urlResource.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 				230364A0285EF343003739F2 /* SettingNC.swift */,
 				237A6840285493E600E6A890 /* SettingVC.swift */,
 				230364A2285F0514003739F2 /* LockVC.swift */,
+				230364AF285F1F19003739F2 /* LockSettingVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -658,6 +661,7 @@
 				237A683D285493B300E6A890 /* AddVM.swift in Sources */,
 				2303649B285E06C7003739F2 /* EmbedVC.swift in Sources */,
 				2373321C28565BF200D9814A /* UIColor+.swift in Sources */,
+				230364B0285F1F19003739F2 /* LockSettingVC.swift in Sources */,
 				237A6843285493ED00E6A890 /* SettingVM.swift in Sources */,
 				237A6849285494F100E6A890 /* APIError.swift in Sources */,
 				230364AA285F12F9003739F2 /* UIDevice+.swift in Sources */,

@@ -111,6 +111,15 @@ extension SettingVC {
                 self.viewWillAppear(true)
             })
             .disposed(by: bag)
+        
+        lockBtn.rx.tap
+            .asDriver()
+            .drive(onNext: {[weak self] _ in
+                guard let self = self else { return }
+                let lockSettingVC = LockSettingVC()
+                self.navigationController?.pushViewController(lockSettingVC, animated: true)
+            })
+            .disposed(by: bag)
     }
 }
 
