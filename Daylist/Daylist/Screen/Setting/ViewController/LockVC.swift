@@ -24,7 +24,6 @@ class LockVC: BaseViewController {
     
     private var message = UILabel()
         .then {
-            $0.text = "잠금 해제를 위한 암호를 입력해 주세요."
             $0.font = UIFont.systemFont(ofSize: 17)
             $0.textColor = .systemGray
             $0.textAlignment = .center
@@ -41,6 +40,8 @@ class LockVC: BaseViewController {
     private var keypadCV = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private var inputPasswd = [Int]()
     private let bag = DisposeBag()
+    private var passwdTmp = [Int]()
+    var lockType: LockType?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,14 +84,9 @@ extension LockVC {
              }
         } completion: { _ in
             self.view.isUserInteractionEnabled = true
-            self.message.text = "잠금 해제를 위한 암호를 입력해 주세요."
+            self.message.text = self.lockType?.message
             self.passwdLayout(leading: 101, triling: -101)
-            
-            for i in 0..<4 {
-                let passwd = self.passwdStackView.arrangedSubviews[i] as! UIImageView
-                passwd.image = UIImage(named: "passwdNull")
-            }
-            self.inputPasswd.removeAll()
+            self.clearPW()
         }
         message.text = "암호가 일치하지 않습니다."
     }
@@ -109,6 +105,7 @@ extension LockVC {
 extension LockVC {
     private func configureTitle() {
         view.addSubviews([viewTitle, message])
+        message.text = lockType?.message
     }
     
     private func configurePasswdStackView() {
@@ -130,6 +127,11 @@ extension LockVC {
         view.addSubview(keypadCV)
         keypadCV.register(KeypadCVC.self, forCellWithReuseIdentifier: KeypadCVC.className)
         keypadCV.dataSource = self
+    }
+    
+    private func configurePWImage(with image: UIImage) {
+        let passwd = self.passwdStackView.arrangedSubviews[self.inputPasswd.count] as! UIImageView
+        passwd.image = image
     }
 }
 
@@ -174,33 +176,59 @@ extension LockVC {
                       let cell = self.keypadCV.cellForItem(at: indexPath) as? KeypadCVC else { return }
                 switch indexPath.row {
                 case 0..<9, 10:
-                    let passwd = self.passwdStackView.arrangedSubviews[self.inputPasswd.count] as! UIImageView
-                    passwd.image = UIImage(named: "passwdFilled")
+                    self.configurePWImage(with: UIImage(named: "passwdFilled")!)
                     self.inputPasswd.append(Int(cell.number.text!)!)
                 case 11:
+                    self.configurePWImage(with: UIImage(named: "passwdNull")!)
                     self.inputPasswd.removeLast()
-                    let passwd = self.passwdStackView.arrangedSubviews[self.inputPasswd.count] as! UIImageView
-                    passwd.image = UIImage(named: "passwdNull")
                 default:
                     return
                 }
+                
                 if self.inputPasswd.count == 4 {
-                    if self.inputPasswd == UserDefaults.Keys.lockPasswd {
-                        self.dismiss(animated: true)
-                    } else {
-                        self.wrongAnimation()
-                        UIDevice.vibrate()
-                    }
+                    self.checkPW()
                 }
             })
             .disposed(by: bag)
     }
 }
 
-// MARK: - Output
+// MARK: - Custom Methods
 
 extension LockVC {
+    private func clearPW() {
+        inputPasswd.removeAll()
+        for i in 0..<4 {
+            let passwd = passwdStackView.arrangedSubviews[i] as! UIImageView
+            passwd.image = UIImage(named: "passwdNull")
+        }
+    }
     
+    private func comparePasswd(with input: String) {
+        if inputPasswd.map({"\($0)"}).joined() == input {
+            dismiss(animated: true)
+            if lockType == .checkPW { UserDefaults.standard.set(input, forKey: UserDefaults.Keys.lockPasswd) }
+        } else {
+            wrongAnimation()
+            UIDevice.vibrate()
+        }
+    }
+    
+    private func checkPW() {
+        switch lockType {
+        case .enter:
+            comparePasswd(with: UserDefaults.standard.string(forKey: UserDefaults.Keys.lockPasswd) ?? "")
+        case .changePW:
+            passwdTmp = inputPasswd
+            clearPW()
+            lockType = .checkPW
+            message.text = lockType?.message
+        case .checkPW:
+            self.comparePasswd(with: self.passwdTmp.map({"\($0)"}).joined())
+        default:
+            break
+        }
+    }
 }
 
 // MARK: - DataSource

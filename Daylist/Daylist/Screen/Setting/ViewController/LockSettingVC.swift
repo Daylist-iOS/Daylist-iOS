@@ -27,7 +27,8 @@ class LockSettingVC: BaseViewController {
         }
     private var lockSwitch = UISwitch()
         .then {
-            $0.onTintColor = .black
+            $0.onTintColor = .label
+            $0.isOn = UserDefaults.standard.string(forKey: UserDefaults.Keys.lockPasswd) != nil
         }
     
     private let hideView = UIView()
@@ -60,12 +61,13 @@ class LockSettingVC: BaseViewController {
     override func layoutView() {
         super.layoutView()
         configureLayout()
-        hideViewLayout(isHidden: UserDefaults.Keys.lockPasswd.isEmpty)
+        hideViewLayout(isHidden: !lockSwitch.isOn)
     }
     
     override func bindInput() {
         super.bindInput()
         bindSwitch()
+        bindButtonAction()
     }
     
     override func bindOutput() {
@@ -154,6 +156,19 @@ extension LockSettingVC {
             })
             .disposed(by: bag)
     }
+    
+    private func bindButtonAction() {
+        changePasswdBtn.rx.tap
+            .asDriver()
+            .drive(onNext: {[weak self] _ in
+                guard let self = self else { return }
+                let changePW = LockVC()
+                changePW.lockType = .changePW
+                changePW.modalPresentationStyle = .overFullScreen
+                self.present(changePW, animated: true)
+            })
+            .disposed(by: bag)
+    }
 }
 
 // MARK: - Output
@@ -169,10 +184,14 @@ extension LockSettingVC {
             self.hideViewLayout(isHidden: !self.lockSwitch.isOn)
             self.view.layoutIfNeeded()
         }
+        
         if lockSwitch.isOn {
             let lockVC = LockVC()
+            lockVC.lockType = .changePW
             lockVC.modalPresentationStyle = .overFullScreen
-            present(lockVC, animated: true, completion: nil)
+            present(lockVC, animated: true)
+        } else {
+            UserDefaults.standard.set(nil, forKey: UserDefaults.Keys.lockPasswd)
         }
     }
 }

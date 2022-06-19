@@ -8,6 +8,6 @@
 import Foundation
 extension UserDefaults {
     enum Keys {
-        static var lockPasswd = [Int]()
+        static var lockPasswd = "lockPasswd"
     }
 }

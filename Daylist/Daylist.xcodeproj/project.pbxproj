@@ -17,6 +17,7 @@
 		230364AA285F12F9003739F2 /* UIDevice+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364A9285F12F9003739F2 /* UIDevice+.swift */; };
 		230364AC285F18B0003739F2 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364AB285F18B0003739F2 /* UserDefaults+.swift */; };
 		230364B0285F1F19003739F2 /* LockSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364AF285F1F19003739F2 /* LockSettingVC.swift */; };
+		230364B2285F3368003739F2 /* LockType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230364B1285F3368003739F2 /* LockType.swift */; };
 		235E9333285BAA8000531686 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9332285BAA8000531686 /* GenericResponse.swift */; };
 		235E9336285CA07700531686 /* MediaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9335285CA07700531686 /* MediaResponse.swift */; };
 		235E9338285CA1CB00531686 /* urlResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9337285CA1CB00531686 /* urlResource.swift */; };
@@ -83,6 +84,7 @@
 		230364A9285F12F9003739F2 /* UIDevice+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+.swift"; sourceTree = "<group>"; };
 		230364AB285F18B0003739F2 /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		230364AF285F1F19003739F2 /* LockSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockSettingVC.swift; sourceTree = "<group>"; };
+		230364B1285F3368003739F2 /* LockType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockType.swift; sourceTree = "<group>"; };
 		235E9332285BAA8000531686 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		235E9335285CA07700531686 /* MediaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResponse.swift; sourceTree = "<group>"; };
 		235E9337285CA1CB00531686 /* urlResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = urlResource.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 				237A686A2855D89A00E6A890 /* NaviType.swift */,
 				237A6877285624EB00E6A890 /* CDPlayerType.swift */,
 				23A933D028577B39009E4CEE /* EmotionType.swift */,
+				230364B1285F3368003739F2 /* LockType.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -615,6 +618,7 @@
 				237A684B2854950100E6A890 /* APIService.swift in Sources */,
 				23A933CD28577209009E4CEE /* LoadingView.swift in Sources */,
 				2373321E2856FA2E00D9814A /* YoutubeSearchVC.swift in Sources */,
+				230364B2285F3368003739F2 /* LockType.swift in Sources */,
 				237A6846285494D200E6A890 /* Service.swift in Sources */,
 				237A683B2854938F00E6A890 /* AddVC.swift in Sources */,
 				23A5752628547E46006946DD /* AppDelegate.swift in Sources */,
