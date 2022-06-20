@@ -83,6 +83,7 @@
 		33B1318D2860522E00916CCB /* CalendarCalculateType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B1318C2860522E00916CCB /* CalendarCalculateType.swift */; };
 		33B1318F2860846A00916CCB /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B1318E2860846A00916CCB /* String.swift */; };
 		33B131942860926400916CCB /* CalendarSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131932860926400916CCB /* CalendarSummaryModel.swift */; };
+		33B131962860B66500916CCB /* CalendarSummaryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131952860B66500916CCB /* CalendarSummaryType.swift */; };
 		9D6DA303C98BFFC9E7AA0B21 /* Pods_Daylist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857655EDBDE2423C5BC9010E /* Pods_Daylist.framework */; };
 /* End PBXBuildFile section */
 
@@ -165,6 +166,7 @@
 		33B1318C2860522E00916CCB /* CalendarCalculateType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCalculateType.swift; sourceTree = "<group>"; };
 		33B1318E2860846A00916CCB /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		33B131932860926400916CCB /* CalendarSummaryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSummaryModel.swift; sourceTree = "<group>"; };
+		33B131952860B66500916CCB /* CalendarSummaryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSummaryType.swift; sourceTree = "<group>"; };
 		857655EDBDE2423C5BC9010E /* Pods_Daylist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Daylist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE0C2DD3BA6B9360AC3069AE /* Pods-Daylist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daylist.release.xcconfig"; path = "Target Support Files/Pods-Daylist/Pods-Daylist.release.xcconfig"; sourceTree = "<group>"; };
 		C89BF158F45A4705FA3DC9D1 /* Pods-Daylist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daylist.debug.xcconfig"; path = "Target Support Files/Pods-Daylist/Pods-Daylist.debug.xcconfig"; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				230364B1285F3368003739F2 /* LockType.swift */,
 				230D733928606CBA00582792 /* ToastType.swift */,
 				33B1318C2860522E00916CCB /* CalendarCalculateType.swift */,
+				33B131952860B66500916CCB /* CalendarSummaryType.swift */,
 			);
 			path = Enum;
 			sourceTree = "<group>";
@@ -749,6 +752,7 @@
 				23A933CF28577985009E4CEE /* EmotionCVC.swift in Sources */,
 				237332392857597500D9814A /* Bundle+.swift in Sources */,
 				2373323128571D0900D9814A /* Input.swift in Sources */,
+				33B131962860B66500916CCB /* CalendarSummaryType.swift in Sources */,
 				237A68542854989500E6A890 /* UIView+.swift in Sources */,
 				237A683D285493B300E6A890 /* AddVM.swift in Sources */,
 				230D733828606C9400582792 /* ToastView.swift in Sources */,

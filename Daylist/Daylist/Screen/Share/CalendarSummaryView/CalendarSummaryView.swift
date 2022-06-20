@@ -120,14 +120,9 @@ extension CalendarSummaryView {
 }
 
 // MARK: - Custom Methods
-enum CalendarSummaryDataType {
-    case today
-    case none
-    case exist
-}
 
 extension CalendarSummaryView {
-    func setData(isData: CalendarSummaryDataType, model: CalendarSummaryModel) {
+    func setData(isData: CalendarSummaryType, model: CalendarSummaryModel) {
         switch isData {
         case .none:
             setSummaryViewProperties(isHidden: true, model: model)
