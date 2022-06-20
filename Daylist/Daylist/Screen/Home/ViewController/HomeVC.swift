@@ -198,8 +198,10 @@ extension HomeVC {
             .disposed(by: bag)
         
         settingBtn.rx.tap
-            .subscribe(onNext: {
-                // TODO: 설정뷰와 연결
+            .subscribe(onNext: { [weak self] in
+                let settingVC = SettingNC()
+                settingVC.modalPresentationStyle = .fullScreen
+                self?.present(settingVC, animated: true)
             })
             .disposed(by: bag)
         
