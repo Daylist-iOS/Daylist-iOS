@@ -7,12 +7,12 @@
 
 import UIKit
 
-enum EmotionType: CaseIterable {
-    case happy
-    case flutter
-    case comfortable
-    case notGood
-    case sad
+enum EmotionType: Int, CaseIterable {
+    case happy = 0
+    case flutter = 1
+    case comfortable = 2
+    case notGood = 3
+    case sad = 4
 }
 
 extension EmotionType {
