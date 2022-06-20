@@ -18,9 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame:UIScreen.main.bounds)
         window?.makeKeyAndVisible()
+        window?.overrideUserInterfaceStyle
+        = UserDefaults.standard.string(forKey: "Appearance") == "Dark"
+        ? .dark : .light
         
 //        let rootViewcontroller = UINavigationController(rootViewController: HomeVC())
-        let rootViewcontroller = AddNC()
+        let rootViewcontroller = SettingNC()
         
         window?.rootViewController = rootViewcontroller
         
@@ -34,6 +37,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        if UserDefaults.standard.string(forKey: UserDefaults.Keys.lockPasswd) != nil {
+            let lockVC = LockVC()
+            lockVC.lockType = .enter
+            lockVC.modalPresentationStyle = .fullScreen
+            window?.rootViewController?.present(lockVC, animated: false, completion: nil)
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

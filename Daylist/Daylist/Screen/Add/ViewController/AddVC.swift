@@ -30,7 +30,7 @@ class AddVC: BaseViewController {
     private var searchIcon = UIImageView()
         .then {
             $0.image = UIImage(systemName: "link")
-            $0.tintColor = .black
+            $0.tintColor = .label
         }
     
     private var separator = UIView()
@@ -56,6 +56,7 @@ class AddVC: BaseViewController {
     private let naviBar = NavigationBar()
     private var imagePicker: UIImagePickerController!
     private var embedMedia: EmbedModel?
+    private var postMedia: AddModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -258,13 +259,13 @@ extension AddVC {
         naviBar.rightBtn.rx.tap
             .subscribe(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                let media = AddModel(userId: 1,
+                self.postMedia = AddModel(userId: 1,
                                      title: self.postTitle.text ?? "",
                                      description: self.postContent.text ?? "",
                                      thumbnailImage: self.player.getThumbnailImage(),
                                      mediaLink: self.embedMedia?.mediaURL ?? "",
                                      emotion: self.emotionCV.indexPathsForSelectedItems?.first?.row)
-                self.viewModel.postMediaData(with: media)
+                self.viewModel.input.postModel.accept(self.postMedia!)
             })
             .disposed(by: bag)
     }
@@ -302,17 +303,26 @@ extension AddVC {
     }
     
     private func bindPopup() {
+        viewModel.output.isValidPost
+            .subscribe(onNext: {[weak self] isValid in
+                guard let self = self,
+                      let media = self.postMedia else { return }
+                isValid
+                ? self.viewModel.postMediaData(with: media)
+                : self.popupToast(toastType: .chooseAll)
+            })
+            .disposed(by: bag)
+
         viewModel.output.addResponseSuccess
             .asDriver(onErrorJustReturn: true)
             .drive { [weak self] _ in
                 guard let self = self else { return }
                 self.dismiss(animated: true) {
-                    // TODO: - 등록 팝업 추가
+                    let ad = UIApplication.shared.delegate as! AppDelegate
+                    ad.window?.rootViewController?.popupToast(toastType: .addMedia)
                 }
             }
             .disposed(by: bag)
-        
-        // TODO: - 모든 항목을 선택해주세요 팝업
     }
 }
 

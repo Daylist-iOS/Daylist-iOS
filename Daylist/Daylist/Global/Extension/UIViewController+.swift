@@ -101,4 +101,24 @@ extension UIViewController {
         guard let loadingView = view.subviews.compactMap({ $0 as? LoadingView }).first else { return }
         loadingView.removeFromSuperview()
     }
+    
+    /// toastType에 따라 토스트 메세지를 보여주는 메서드
+    func popupToast(toastType: ToastType) {
+        let toastView = ToastView()
+        view.addSubview(toastView)
+        toastView.setMessage(message: toastType.message)
+        
+        toastView.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(46)
+        }
+        
+        UIView.animate(withDuration: 1.0, delay: 0.5, options: .curveEaseOut, animations: {
+            toastView.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastView.removeFromSuperview()
+        })
+    }
 }
