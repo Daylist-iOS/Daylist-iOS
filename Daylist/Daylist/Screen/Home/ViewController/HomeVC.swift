@@ -142,13 +142,13 @@ extension HomeVC {
         calendarCV.snp.makeConstraints {
             $0.top.equalTo(headerLabel.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(21)
-            $0.bottom.equalTo(detailView.snp.top).inset(-26)
+            $0.bottom.equalTo(detailView.snp.top).inset(-16)
         }
         
         detailView.snp.makeConstraints {
             $0.bottom.equalTo(addBtn.snp.top).offset(-21)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(calculateHeightbyScreenHeight(originalHeight: 144))
+            $0.height.equalTo(calculateHeightbyScreenHeight(originalHeight: 134.adjustedH))
         }
         
         addBtn.snp.makeConstraints {
@@ -329,9 +329,9 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.section {
         case 0:
-            return CGSize(width: 38, height: 18)
+            return CGSize(width: 38.adjusted, height: 18.adjustedH)
         default:
-            return CGSize(width: 48, height: 60)
+            return CGSize(width: 38.adjusted, height: 60.adjustedH)
         }
     }
     
@@ -344,9 +344,9 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         switch section {
         case 0:
-            return 7
+            return 7.adjusted
         default:
-            return 2
+            return 7.adjusted
         }
     }
     
