@@ -162,6 +162,7 @@ extension SearchVC: UISearchBarDelegate {
     
     /// searchBarSearchButtonClicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        view.endEditing(true)
         viewModel.postSearchData(with: SearchDataRequest(userId: 1, keyword: searchBar.searchTextField.text ?? ""))
     }
     
