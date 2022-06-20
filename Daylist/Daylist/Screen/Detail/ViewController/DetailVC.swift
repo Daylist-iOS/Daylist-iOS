@@ -10,10 +10,12 @@ import RxCocoa
 import RxSwift
 import SnapKit
 import Then
+import Kingfisher
 
 final class DetailVC: BaseViewController {
     
     // MARK: Properties
+    
     private var naviBar = NavigationBar()
     private var detailSV = UIScrollView().then {
         $0.showsVerticalScrollIndicator = false
@@ -28,7 +30,6 @@ final class DetailVC: BaseViewController {
     private var titleLabel = UILabel().then {
         $0.font = UIFont.KyoboHandwriting(size: 20.0)
         $0.textColor = .black
-        $0.text = "오늘의 플레이리스트"
     }
     
     private var emotionImageView = UIImageView().then {
@@ -43,9 +44,10 @@ final class DetailVC: BaseViewController {
     }
     
     // MARK: Variables
+    
     private var bag = DisposeBag()
     private var viewModel = DetailVM()
-    var summaryData: CalendarSummaryModel?
+    var playlistId: Int?
     
     // MARK: Life Cycle
     
@@ -75,6 +77,7 @@ final class DetailVC: BaseViewController {
         super.bindOutput()
         bindLoading()
         bindOnError()
+        bindDetailData()
     }
 }
 
@@ -82,7 +85,7 @@ final class DetailVC: BaseViewController {
 
 extension DetailVC {
     private func configureNaviBar() {
-        naviBar.configureNaviBar(targetVC: self, title: "ㅇㅇㅇ")
+        naviBar.configureNaviBar(targetVC: self, title: "")
         naviBar.configureBackBtn(targetVC: self, action: #selector(popVC), naviType: .push)
         naviBar.configureRightBarBtn(targetVC: self, image: UIImage(named: "btn_more") ?? UIImage())
     }
@@ -90,17 +93,6 @@ extension DetailVC {
     private func configureCDPlayerView() {
         cdPlayerView.configureLayout(with: .detail)
         cdPlayerView.configurePlayerBtn(playerType: .detail, target: self, action: #selector(goToMediaLink))
-    }
-    
-    private func optionalBindData() {
-        if let summary = summaryData {
-            print(summary)
-        }
-    }
-    
-    @objc
-    private func goToMediaLink() {
-        print("goToMediaLink")
     }
 }
 
@@ -172,5 +164,41 @@ extension DetailVC {
                 self.showErrorAlert(error.description)
             })
             .disposed(by: bag)
+    }
+    
+    private func bindDetailData() {
+        viewModel.output.detailData
+            .subscribe(onNext: { [weak self] data in
+                self?.naviBar.setNaviBarTitleText(title: data.createdAt.serverTimeToString(dateFormat: "yyyy.MM.dd"))
+                guard let thumbnailURL = URL(string: data.thumbnailImage) else { return }
+                KingfisherManager.shared.retrieveImage(with: thumbnailURL) { image in
+                    switch image {
+                    case .success(let imageData):
+                        self?.cdPlayerView.setThumbnailImage(with: imageData.image)
+                    case .failure:
+                        return
+                    }
+                }
+
+                self?.titleLabel.text = data.title
+                self?.emotionImageView.image = EmotionType(rawValue: data.emotion)?.emotionImage
+                self?.descriptionTextView.text = data.description
+            })
+            .disposed(by: bag)
+    }
+}
+
+// MARK: - Custom Methods
+
+extension DetailVC {
+    private func optionalBindData() {
+        if let id = playlistId {
+            viewModel.getDetailData(with: DetailRequestModel(userId: 1, playlistId: id))
+        }
+    }
+    
+    @objc
+    private func goToMediaLink() {
+        print("goToMediaLink")
     }
 }
