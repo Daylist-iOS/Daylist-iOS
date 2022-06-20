@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Kingfisher
 
 class CalendarSummaryView: UIView {
     
@@ -35,11 +36,18 @@ class CalendarSummaryView: UIView {
         $0.letterSpacing = -0.24
     }
     
-    private let descriptionLabel = UILabel().then {
+    private let descriptionTextView = UITextView().then {
         $0.textColor = .lightDarkGray
         $0.font = UIFont.KyoboHandwriting(size: 10.0)
-        $0.letterSpacing = -0.24
-        $0.numberOfLines = 0
+        $0.backgroundColor = .none
+        $0.isEditable = false
+    }
+    
+    private let noneTextView = UITextView().then {
+        $0.textColor = .lightDarkGray
+        $0.font = UIFont.KyoboHandwriting(size: 12.0)
+        $0.backgroundColor = .none
+        $0.isEditable = false
     }
     
     private let stylusImageView = UIImageView().then {
@@ -69,7 +77,7 @@ class CalendarSummaryView: UIView {
 
 extension CalendarSummaryView {
     private func configureUI() {
-        self.addSubviews([cdPlayerView, dateLabel, titleStackView, descriptionLabel, stylusImageView])
+        self.addSubviews([cdPlayerView, dateLabel, titleStackView, descriptionTextView, stylusImageView])
         titleStackView.addArrangedSubview(emotionImageView)
         titleStackView.addArrangedSubview(titleLabel)
         
@@ -88,7 +96,7 @@ extension CalendarSummaryView {
         titleStackView.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(5)
             $0.leading.equalTo(dateLabel)
-            $0.trailing.equalTo(stylusImageView.snp.leading).inset(27)
+            $0.trailing.equalTo(stylusImageView.snp.leading).inset(-27)
             $0.height.equalTo(calculateHeightbyScreenHeight(originalHeight: 20))
         }
         
@@ -97,7 +105,7 @@ extension CalendarSummaryView {
             $0.width.equalTo(calculateHeightbyScreenHeight(originalHeight: 20) * 21 / 20)
         }
         
-        descriptionLabel.snp.makeConstraints {
+        descriptionTextView.snp.makeConstraints {
             $0.top.equalTo(titleStackView.snp.bottom).offset(5)
             $0.leading.trailing.equalTo(titleStackView)
             $0.trailing.equalTo(stylusImageView.snp.leading).offset(-20)
@@ -111,17 +119,81 @@ extension CalendarSummaryView {
             $0.width.equalTo(calculateHeightbyScreenHeight(originalHeight: 106) * 8 / 106)
         }
     }
+    
+    func setBackgroundColor(isHome: Bool) {
+        self.backgroundColor = isHome ? .homeGray : .white
+    }
 }
 
 // MARK: - Custom Methods
+enum CalendarSummaryDataType {
+    case today
+    case none
+    case exist
+}
 
 extension CalendarSummaryView {
-    func setData(isHome: Bool, model: CalendarSummaryModel) {
-        self.backgroundColor = isHome ? .homeGray : .white
-        cdPlayerView.setThumbnailImage(with: UIImage(named: model.thumbnailImageName) ?? UIImage())
+    func setData(isData: CalendarSummaryDataType, model: CalendarSummaryModel) {
+        switch isData {
+        case .none:
+            setSummaryViewProperties(isHidden: true, model: model)
+            setSummaryViewWhenNoneData()
+            descriptionTextView.text = "기록된 데일리스트가 없습니다"
+        case .today:
+            if model.title == "" && model.description == "" {
+                setSummaryViewProperties(isHidden: true, model: model)
+                setSummaryViewWhenNoneData()
+                descriptionTextView.text = "오늘의 데일리스트가 없습니다. \n오늘 하루 인상깊었던 미디어를 기록해보세요!"
+            } else {
+                setSummaryViewProperties(isHidden: false, model: model)
+                setSummaryViewWhenDataExist()
+            }
+        case .exist:
+            setSummaryViewProperties(isHidden: false, model: model)
+            setSummaryViewWhenDataExist()
+        }
+    }
+    
+    private func setSummaryViewWhenNoneData() {
+        descriptionTextView.snp.remakeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(titleStackView)
+            $0.trailing.equalTo(stylusImageView.snp.leading).offset(-20)
+            $0.height.equalTo(50)
+        }
+    }
+    
+    private func setSummaryViewWhenDataExist() {
+        descriptionTextView.snp.remakeConstraints {
+            $0.top.equalTo(titleStackView.snp.bottom).offset(5)
+            $0.leading.trailing.equalTo(titleStackView)
+            $0.trailing.equalTo(stylusImageView.snp.leading).offset(-20)
+            $0.bottom.equalToSuperview().inset(20)
+        }
+    }
+    
+    private func setSummaryViewProperties(isHidden: Bool, model: CalendarSummaryModel) {
+        [dateLabel, emotionImageView, titleLabel].forEach {
+            $0.isHidden = isHidden
+        }
+
         dateLabel.text = model.date
         titleLabel.text = model.title
-        descriptionLabel.text = model.description
+        descriptionTextView.text = model.description
         emotionImageView.image = model.emotion.emotionImage
+        
+        if isHidden {
+            self.cdPlayerView.setThumbnailImage(with: UIImage())
+        } else {
+            guard let thumbnailURL = URL(string: model.thumbnailImageName) else { return }
+            KingfisherManager.shared.retrieveImage(with: thumbnailURL) { image in
+                switch image {
+                case .success(let imageData):
+                    self.cdPlayerView.setThumbnailImage(with: imageData.image)
+                case .failure:
+                    return
+                }
+            }
+        }
     }
 }
