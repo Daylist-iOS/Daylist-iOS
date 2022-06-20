@@ -11,5 +11,6 @@ class HomeNC: BaseNavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setViewControllers([HomeVC()], animated: true)
     }
 }
