@@ -104,9 +104,10 @@ extension SettingVC {
         darkModeBtn.rx.tap
             .asDriver()
             .drive(onNext: {[weak self] _ in
-                guard let self = self else { return }
-                let isDarkMode = self.overrideUserInterfaceStyle == .dark
-                self.overrideUserInterfaceStyle = isDarkMode ? .light : .dark
+                guard let self = self,
+                      let ad = UIApplication.shared.delegate as? AppDelegate else { return }
+                let isDarkMode = ad.window?.overrideUserInterfaceStyle == .dark
+                ad.window?.overrideUserInterfaceStyle = isDarkMode ? .light : .dark
                 UserDefaults.standard.set(isDarkMode ? "Light" : "Dark", forKey: "Appearance")
                 self.viewWillAppear(true)
             })

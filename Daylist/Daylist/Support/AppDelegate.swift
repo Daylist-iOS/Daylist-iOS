@@ -18,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame:UIScreen.main.bounds)
         window?.makeKeyAndVisible()
+        window?.overrideUserInterfaceStyle
+        = UserDefaults.standard.string(forKey: "Appearance") == "Dark"
+        ? .dark : .light
         
 //        let rootViewcontroller = UINavigationController(rootViewController: HomeVC())
         let rootViewcontroller = SettingNC()
