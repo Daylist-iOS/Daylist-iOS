@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let lockVC = LockVC()
             lockVC.lockType = .enter
             lockVC.modalPresentationStyle = .fullScreen
-            window?.rootViewController?.present(lockVC, animated: false, completion: nil)
+            UIApplication.topViewController(base: window?.rootViewController)?.present(lockVC, animated: true)
         }
     }
 
