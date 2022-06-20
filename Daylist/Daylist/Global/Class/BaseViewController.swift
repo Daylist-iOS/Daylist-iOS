@@ -23,6 +23,7 @@ class BaseViewController: UIViewController {
         configureView()
         layoutView()
         bindRx()
+        hideKeyboard()
     }
     
     func configureView() {
