@@ -15,15 +15,6 @@ class CalendarSummaryView: UIView {
     
     private var cdPlayerView = CDPlayerView()
     
-    private var thumbnailImageView = UIImageView().then {
-        $0.layer.cornerRadius = 38
-        $0.clipsToBounds = true
-    }
-    
-    private var playerCenterImageView = UIImageView().then {
-        $0.image = UIImage(named: "PlayerCenter")
-    }
-    
     private var dateLabel = UILabel().then {
         $0.textColor = .mediumGray
         $0.font = UIFont.KyoboHandwriting(size: 10.0)
