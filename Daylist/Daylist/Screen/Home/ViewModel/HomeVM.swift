@@ -50,6 +50,7 @@ final class HomeVM: BaseViewModel {
     private var daysCountInMonth = 0 // 해당 월이 며칠까지 있는지
     private var weekdayAdding = 0 // 시작일
     private(set) var dayData = BehaviorRelay<[CalendarDataResponse]>(value: [])
+    private(set) var summaryData = BehaviorRelay<[CalendarSummaryModel]>(value: [CalendarSummaryModel(thumbnailImageName: "", date: "", emotion: EmotionType(rawValue: 0) ?? .happy, title: "", description: "")])
     
     // MARK: - Input
     
@@ -167,7 +168,7 @@ extension HomeVM {
         
         apiSession.getRequest(with: resource)
             .withUnretained(self)
-            .subscribe(onNext: { owner, result in
+            .subscribe(onNext: { [self] owner, result in
                 owner.output.endLoading()
                 switch result {
                 case .failure(let error):
@@ -175,15 +176,22 @@ extension HomeVM {
                     
                 case .success(let data):
                     var allDayData: [CalendarDataResponse ] = []
-                    for i in self.days {
+                    for i in days {
                         allDayData.append(CalendarDataResponse(playlistID: 0, userID: 0, title: "", description: "", thumbnailImage: "", mediaLink: "", emotion: 0, createdAt: i))
                     }
+                    
+                    let todayDay = String(describing: cal.component(.day, from: now))
                     
                     if data.count != 0 {
                         for i in 0...data.count - 1 {
                             for j in 0...allDayData.count - 1 {
-                                if allDayData[j].createdAt == data[i].createdAt.serverTimeToString() {
+                                if allDayData[j].createdAt == data[i].createdAt.serverTimeToString(dateFormat: "d") {
                                     allDayData[j] = data[i]
+                                    
+                                    // 오늘
+                                    if todayDay == data[i].createdAt.serverTimeToString(dateFormat: "d") {
+                                        owner.summaryData.accept([CalendarSummaryModel(thumbnailImageName: data[i].thumbnailImage, date: data[i].createdAt, emotion: EmotionType(rawValue: data[i].emotion) ?? .happy, title: data[i].title, description: data[i].description)])
+                                    }
                                 }
                             }
                         }

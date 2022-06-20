@@ -49,7 +49,9 @@ final class HomeVC: BaseViewController {
         $0.showsVerticalScrollIndicator = false
     }
     
-    private let detailView = CalendarSummaryView()
+    private let detailView = CalendarSummaryView().then {
+        $0.setBackgroundColor(isHome: true)
+    }
     
     private let addBtn = UIButton().then {
         $0.setImage(UIImage(named: "btn_add"), for: .normal)
@@ -57,6 +59,8 @@ final class HomeVC: BaseViewController {
     
     private var bag = DisposeBag()
     private var viewModel = HomeVM()
+    
+    // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,7 +81,6 @@ final class HomeVC: BaseViewController {
     
     override func bindInput() {
         super.bindInput()
-        bindUI()
         bindUserInteractions()
     }
     
@@ -139,11 +142,11 @@ extension HomeVC {
         calendarCV.snp.makeConstraints {
             $0.top.equalTo(headerLabel.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(21)
-            $0.bottom.equalTo(detailView.snp.top).inset(26)
+            $0.bottom.equalTo(detailView.snp.top).inset(-26)
         }
         
         detailView.snp.makeConstraints {
-            $0.bottom.equalTo(addBtn.snp.top).offset(21)
+            $0.bottom.equalTo(addBtn.snp.top).offset(-21)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(calculateHeightbyScreenHeight(originalHeight: 144))
         }
@@ -175,10 +178,6 @@ extension HomeVC {
 // MARK: - Input
 
 extension HomeVC {
-    private func bindUI() {
-        
-    }
-    
     private func bindUserInteractions() {
         goToLastMonthBtn.rx.tap
             .subscribe(onNext: { [weak self] in
@@ -211,6 +210,26 @@ extension HomeVC {
                 self?.present(addVC, animated: true)
             })
             .disposed(by: bag)
+        
+        calendarCV.rx.itemSelected
+            .subscribe(onNext: { indexPath in
+                self.detailView.setData(
+                    isData: self.viewModel.dayData.value[indexPath.row].playlistID == 0 ? .none : .exist,
+                    model: CalendarSummaryModel(
+                        thumbnailImageName: self.viewModel.dayData.value[indexPath.row].thumbnailImage,
+                        date: self.viewModel.dayData.value[indexPath.row].createdAt.serverTimeToString(dateFormat: "yyyy.MM.dd"),
+                        emotion: EmotionType(rawValue: self.viewModel.dayData.value[indexPath.row].emotion) ?? .happy,
+                        title: self.viewModel.dayData.value[indexPath.row].title,
+                        description: self.viewModel.dayData.value[indexPath.row].description))
+            })
+            .disposed(by: bag)
+        
+        detailView.rx.tapGesture()
+            .when(.ended)
+            .subscribe(onNext: { _ in
+                // TODO: 상세뷰와 연결
+            })
+            .disposed(by: bag)
     }
 }
 
@@ -240,8 +259,14 @@ extension HomeVC {
     private func bindDataSource() {
         viewModel.dayData
             .subscribe(onNext: { [weak self] _ in
-                
                 self?.calendarCV.reloadData()
+            }).disposed(by: bag)
+        
+        viewModel.summaryData
+            .subscribe(onNext: { [weak self] data in
+                if data.count != 0 {
+                    self?.detailView.setData(isData: .today, model: data[0])
+                }
             }).disposed(by: bag)
     }
 }
