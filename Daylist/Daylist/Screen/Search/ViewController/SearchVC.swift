@@ -160,7 +160,19 @@ extension SearchVC: UISearchBarDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
+    /// searchBarSearchButtonClicked
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         viewModel.postSearchData(with: SearchDataRequest(userId: 1, keyword: searchBar.searchTextField.text ?? ""))
+    }
+    
+    /// searchBarShouldEndEditing
+    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
+        /// 키보드가 내려갈 때 endEditing 상태가 되어도 cancelBtn은 활성화되어있도록 설정
+        DispatchQueue.main.async {
+            if let cancelBtn = searchBar.value(forKey: "cancelButton") as? UIButton {
+                cancelBtn.isEnabled = true
+            }
+        }
+        return true
     }
 }
