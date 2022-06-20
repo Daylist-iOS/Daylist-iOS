@@ -10,7 +10,7 @@ import SnapKit
 import Then
 import Kingfisher
 
-class CalendarSummaryView: UIView {
+class CalendarSummaryView: BaseView {
     
     // MARK: Properties
     
@@ -58,17 +58,11 @@ class CalendarSummaryView: UIView {
     
     var isHome: Bool?
     
-    // MARK: init
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override func layoutView() {
         configureUI()
-        cdPlayerView.configureLayout(with: .home)
     }
     
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        configureUI()
+    override func configureView() {
         cdPlayerView.configureLayout(with: .home)
     }
 }
