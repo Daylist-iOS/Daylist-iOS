@@ -87,6 +87,13 @@
 		33B131942860926400916CCB /* CalendarSummaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131932860926400916CCB /* CalendarSummaryModel.swift */; };
 		33B131962860B66500916CCB /* CalendarSummaryType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131952860B66500916CCB /* CalendarSummaryType.swift */; };
 		33B1319A2860BCBB00916CCB /* Adjusted+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131992860BCBB00916CCB /* Adjusted+.swift */; };
+		33B131A62860D43800916CCB /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131A52860D43800916CCB /* SearchVC.swift */; };
+		33B131A82860D45B00916CCB /* SearchVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131A72860D45B00916CCB /* SearchVM.swift */; };
+		33B131AC2860D48600916CCB /* SearchTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131AB2860D48600916CCB /* SearchTVC.swift */; };
+		33B131AE2860D4B200916CCB /* SearchDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131AD2860D4B200916CCB /* SearchDataResponse.swift */; };
+		33B131B12860D6E500916CCB /* DataSourceSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131B02860D6E500916CCB /* DataSourceSearch.swift */; };
+		33B131B32860D78D00916CCB /* SearchDataRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131B22860D78D00916CCB /* SearchDataRequest.swift */; };
+		33B131B52860DBC500916CCB /* UITableView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B131B42860DBC500916CCB /* UITableView+.swift */; };
 		9D6DA303C98BFFC9E7AA0B21 /* Pods_Daylist.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 857655EDBDE2423C5BC9010E /* Pods_Daylist.framework */; };
 /* End PBXBuildFile section */
 
@@ -173,6 +180,13 @@
 		33B131932860926400916CCB /* CalendarSummaryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarSummaryModel.swift; sourceTree = "<group>"; };
 		33B131952860B66500916CCB /* CalendarSummaryType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSummaryType.swift; sourceTree = "<group>"; };
 		33B131992860BCBB00916CCB /* Adjusted+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Adjusted+.swift"; sourceTree = "<group>"; };
+		33B131A52860D43800916CCB /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		33B131A72860D45B00916CCB /* SearchVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVM.swift; sourceTree = "<group>"; };
+		33B131AB2860D48600916CCB /* SearchTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTVC.swift; sourceTree = "<group>"; };
+		33B131AD2860D4B200916CCB /* SearchDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataResponse.swift; sourceTree = "<group>"; };
+		33B131B02860D6E500916CCB /* DataSourceSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceSearch.swift; sourceTree = "<group>"; };
+		33B131B22860D78D00916CCB /* SearchDataRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDataRequest.swift; sourceTree = "<group>"; };
+		33B131B42860DBC500916CCB /* UITableView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+.swift"; sourceTree = "<group>"; };
 		857655EDBDE2423C5BC9010E /* Pods_Daylist.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Daylist.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE0C2DD3BA6B9360AC3069AE /* Pods-Daylist.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daylist.release.xcconfig"; path = "Target Support Files/Pods-Daylist/Pods-Daylist.release.xcconfig"; sourceTree = "<group>"; };
 		C89BF158F45A4705FA3DC9D1 /* Pods-Daylist.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Daylist.debug.xcconfig"; path = "Target Support Files/Pods-Daylist/Pods-Daylist.debug.xcconfig"; sourceTree = "<group>"; };
@@ -274,6 +288,7 @@
 				33B131992860BCBB00916CCB /* Adjusted+.swift */,
 				235E88712860DC540028F4A3 /* UIApplication+.swift */,
 				235E88732860DC660028F4A3 /* UIWindow+.swift */,
+				33B131B42860DBC500916CCB /* UITableView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -392,6 +407,7 @@
 		23AAFBF42854844B00D7801A /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				33B131A02860D41400916CCB /* Search */,
 				237A68652855D7E100E6A890 /* Share */,
 				23AAFBF72854846600D7801A /* Home */,
 				23AAFBF62854846000D7801A /* Add */,
@@ -568,6 +584,75 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
+		33B131A02860D41400916CCB /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				33B131A42860D42600916CCB /* ViewController */,
+				33B131A32860D42200916CCB /* ViewModel */,
+				33B131A22860D41C00916CCB /* Model */,
+				33B131A12860D41900916CCB /* Cell */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		33B131A12860D41900916CCB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				33B131AB2860D48600916CCB /* SearchTVC.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		33B131A22860D41C00916CCB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				33B131AF2860D6D500916CCB /* DataSource */,
+				33B131A92860D46300916CCB /* Request */,
+				33B131AA2860D46700916CCB /* Response */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		33B131A32860D42200916CCB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				33B131A72860D45B00916CCB /* SearchVM.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		33B131A42860D42600916CCB /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				33B131A52860D43800916CCB /* SearchVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		33B131A92860D46300916CCB /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				33B131B22860D78D00916CCB /* SearchDataRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		33B131AA2860D46700916CCB /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				33B131AD2860D4B200916CCB /* SearchDataResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		33B131AF2860D6D500916CCB /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				33B131B02860D6E500916CCB /* DataSourceSearch.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
 		F7E56C7E2C6BF69D20912D2D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -713,6 +798,7 @@
 				23A933CD28577209009E4CEE /* LoadingView.swift in Sources */,
 				2373321E2856FA2E00D9814A /* YoutubeSearchVC.swift in Sources */,
 				230364B2285F3368003739F2 /* LockType.swift in Sources */,
+				33B131B32860D78D00916CCB /* SearchDataRequest.swift in Sources */,
 				237A6846285494D200E6A890 /* Service.swift in Sources */,
 				237A683B2854938F00E6A890 /* AddVC.swift in Sources */,
 				33B1318B285FB37700916CCB /* CalendarRequestModel.swift in Sources */,
@@ -753,10 +839,12 @@
 				237A68392854938400E6A890 /* AddModel.swift in Sources */,
 				333A6757285DE76200618BD5 /* CalendarSummaryView.swift in Sources */,
 				237A68712855DB9400E6A890 /* NavigationBar.swift in Sources */,
+				33B131A62860D43800916CCB /* SearchVC.swift in Sources */,
 				237332212856FB0C00D9814A /* YoutubeSearchTVC.swift in Sources */,
 				237A686228549AFC00E6A890 /* UIFont+.swift in Sources */,
 				33B1318F2860846A00916CCB /* String.swift in Sources */,
 				237A68522854987500E6A890 /* NotificationCenter+.swift in Sources */,
+				33B131B52860DBC500916CCB /* UITableView+.swift in Sources */,
 				237A682D28548E3000E6A890 /* BaseViewController.swift in Sources */,
 				23036499285DDFF6003739F2 /* EmbedSelectVC.swift in Sources */,
 				237A68582854992100E6A890 /* UITextView+.swift in Sources */,
@@ -767,6 +855,8 @@
 				237A68542854989500E6A890 /* UIView+.swift in Sources */,
 				237A683D285493B300E6A890 /* AddVM.swift in Sources */,
 				230D733828606C9400582792 /* ToastView.swift in Sources */,
+				33B131A82860D45B00916CCB /* SearchVM.swift in Sources */,
+				33B131B12860D6E500916CCB /* DataSourceSearch.swift in Sources */,
 				230D733A28606CBA00582792 /* ToastType.swift in Sources */,
 				2303649B285E06C7003739F2 /* EmbedVC.swift in Sources */,
 				2373321C28565BF200D9814A /* UIColor+.swift in Sources */,
@@ -775,7 +865,9 @@
 				235E88742860DC660028F4A3 /* UIWindow+.swift in Sources */,
 				333A6754285DD78D00618BD5 /* BaseNavigationController.swift in Sources */,
 				333A675E285E370F00618BD5 /* WeekCVC.swift in Sources */,
+				33B131AC2860D48600916CCB /* SearchTVC.swift in Sources */,
 				237A6849285494F100E6A890 /* APIError.swift in Sources */,
+				33B131AE2860D4B200916CCB /* SearchDataResponse.swift in Sources */,
 				230364AA285F12F9003739F2 /* UIDevice+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

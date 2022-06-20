@@ -193,7 +193,8 @@ extension HomeVC {
         
         searchBtn.rx.tap
             .subscribe(onNext: {
-                // TODO: 검색뷰와 연결
+                let searchVC = SearchVC()
+                self.navigationController?.pushViewController(searchVC, animated: true)
             })
             .disposed(by: bag)
         

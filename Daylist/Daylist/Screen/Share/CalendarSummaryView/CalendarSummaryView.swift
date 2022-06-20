@@ -14,7 +14,7 @@ class CalendarSummaryView: BaseView {
     
     // MARK: Properties
     
-    private var cdPlayerView = CDPlayerView()
+    private(set) var cdPlayerView = CDPlayerView()
     
     private var dateLabel = UILabel().then {
         $0.textColor = .mediumGray
@@ -78,7 +78,7 @@ extension CalendarSummaryView {
         cdPlayerView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
             $0.leading.equalToSuperview().offset(20)
-            $0.height.width.equalTo(calculateHeightbyScreenHeight(originalHeight: 113))
+            $0.height.width.equalTo(calculateHeightbyScreenHeight(originalHeight: 113.adjustedH))
         }
         
         dateLabel.snp.makeConstraints {
@@ -90,7 +90,7 @@ extension CalendarSummaryView {
         titleStackView.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(5)
             $0.leading.equalTo(dateLabel)
-            $0.trailing.equalTo(stylusImageView.snp.leading).inset(-27)
+            $0.trailing.equalTo(stylusImageView.snp.leading).inset(27)
             $0.height.equalTo(calculateHeightbyScreenHeight(originalHeight: 20))
         }
         
@@ -101,7 +101,7 @@ extension CalendarSummaryView {
         
         descriptionTextView.snp.makeConstraints {
             $0.top.equalTo(titleStackView.snp.bottom).offset(5)
-            $0.leading.trailing.equalTo(titleStackView)
+            $0.leading.equalTo(titleStackView.snp.leading)
             $0.trailing.equalTo(stylusImageView.snp.leading).offset(-20)
             $0.bottom.equalToSuperview().inset(20)
         }
@@ -155,7 +155,7 @@ extension CalendarSummaryView {
     private func setSummaryViewWhenDataExist() {
         descriptionTextView.snp.remakeConstraints {
             $0.top.equalTo(titleStackView.snp.bottom).offset(5)
-            $0.leading.trailing.equalTo(titleStackView)
+            $0.leading.equalTo(titleStackView)
             $0.trailing.equalTo(stylusImageView.snp.leading).offset(-20)
             $0.bottom.equalToSuperview().inset(20)
         }
