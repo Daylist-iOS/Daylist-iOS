@@ -22,8 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         = UserDefaults.standard.string(forKey: "Appearance") == "Dark"
         ? .dark : .light
         
-//        let rootViewcontroller = UINavigationController(rootViewController: HomeVC())
-        let rootViewcontroller = SettingNC()
+        let rootViewcontroller = HomeNC()
         
         window?.rootViewController = rootViewcontroller
         

@@ -48,7 +48,6 @@ class CDPlayerView: BaseView {
 // MARK: - Configure
 extension CDPlayerView {
     private func configureContentView() {
-        backgroundColor = .playerBase
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.3
         layer.shadowOffset = CGSize(width: -7, height: 5)
@@ -81,6 +80,7 @@ extension CDPlayerView {
     /// player에 따라 선언 및 레이아웃 지정 후 호출하여 내부 constraint를 지정해주는 함수
     func configureLayout(with playerType: CDPlayerType) {
         layer.cornerRadius = playerType.cornerRadius
+        backgroundColor = playerType.playerBackgroundColor
         addSubview(playerBaseImage)
         playerBaseImage.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview().inset(playerType.baseInset)
