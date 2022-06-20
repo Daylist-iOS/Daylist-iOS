@@ -92,11 +92,8 @@ extension LockSettingVC {
     }
     
     private func configureContentView() {
-        view.addSubview(hideView)
-        view.addSubview(lockView)
-        lockView.addSubview(lockTitle)
-        lockView.addSubview(lockSwitch)
-        view.addSubview(warningMessage)
+        view.addSubviews([hideView, lockView, warningMessage])
+        lockView.addSubviews([lockTitle, lockSwitch])
         hideView.addSubview(changePasswdBtn)
     }
     
