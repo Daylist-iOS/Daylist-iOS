@@ -8,20 +8,9 @@
 import UIKit
 import SnapKit
 
-class SettingNC: UINavigationController {
+class SettingNC: BaseNavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        embedContentVC()
-    }
-}
-
-// MARK: - Configure
-extension SettingNC {
-    private func embedContentVC() {
-        setNavigationBarHidden(true, animated: false)
-        let subVC = SettingVC()
-        addChild(subVC)
-        navigationController?.didMove(toParent: self)
+        self.setViewControllers([SettingVC()], animated: true)
     }
 }

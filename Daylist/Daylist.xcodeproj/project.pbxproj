@@ -21,6 +21,8 @@
 		230D7333285F7F8000582792 /* LockVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230D7332285F7F8000582792 /* LockVM.swift */; };
 		230D733828606C9400582792 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230D733728606C9400582792 /* ToastView.swift */; };
 		230D733A28606CBA00582792 /* ToastType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 230D733928606CBA00582792 /* ToastType.swift */; };
+		235E88722860DC540028F4A3 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E88712860DC540028F4A3 /* UIApplication+.swift */; };
+		235E88742860DC660028F4A3 /* UIWindow+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E88732860DC660028F4A3 /* UIWindow+.swift */; };
 		235E9333285BAA8000531686 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9332285BAA8000531686 /* GenericResponse.swift */; };
 		235E9336285CA07700531686 /* MediaResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9335285CA07700531686 /* MediaResponse.swift */; };
 		235E9338285CA1CB00531686 /* urlResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235E9337285CA1CB00531686 /* urlResource.swift */; };
@@ -103,6 +105,8 @@
 		230D7332285F7F8000582792 /* LockVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockVM.swift; sourceTree = "<group>"; };
 		230D733728606C9400582792 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		230D733928606CBA00582792 /* ToastType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastType.swift; sourceTree = "<group>"; };
+		235E88712860DC540028F4A3 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
+		235E88732860DC660028F4A3 /* UIWindow+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIWindow+.swift"; sourceTree = "<group>"; };
 		235E9332285BAA8000531686 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		235E9335285CA07700531686 /* MediaResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaResponse.swift; sourceTree = "<group>"; };
 		235E9337285CA1CB00531686 /* urlResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = urlResource.swift; sourceTree = "<group>"; };
@@ -268,6 +272,8 @@
 				230364AB285F18B0003739F2 /* UserDefaults+.swift */,
 				33B1318E2860846A00916CCB /* String.swift */,
 				33B131992860BCBB00916CCB /* Adjusted+.swift */,
+				235E88712860DC540028F4A3 /* UIApplication+.swift */,
+				235E88732860DC660028F4A3 /* UIWindow+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -700,6 +706,7 @@
 				33B131942860926400916CCB /* CalendarSummaryModel.swift in Sources */,
 				2373322D2857103100D9814A /* DataSourceMedia.swift in Sources */,
 				2373323328571D2100D9814A /* Output.swift in Sources */,
+				235E88722860DC540028F4A3 /* UIApplication+.swift in Sources */,
 				230364A3285F0514003739F2 /* LockVC.swift in Sources */,
 				2373322928570E9800D9814A /* YoutubeListResponse.swift in Sources */,
 				237A684B2854950100E6A890 /* APIService.swift in Sources */,
@@ -765,6 +772,7 @@
 				2373321C28565BF200D9814A /* UIColor+.swift in Sources */,
 				230364B0285F1F19003739F2 /* LockSettingVC.swift in Sources */,
 				237A6843285493ED00E6A890 /* SettingVM.swift in Sources */,
+				235E88742860DC660028F4A3 /* UIWindow+.swift in Sources */,
 				333A6754285DD78D00618BD5 /* BaseNavigationController.swift in Sources */,
 				333A675E285E370F00618BD5 /* WeekCVC.swift in Sources */,
 				237A6849285494F100E6A890 /* APIError.swift in Sources */,
