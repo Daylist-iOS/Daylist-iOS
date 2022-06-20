@@ -199,6 +199,8 @@ extension DetailVC {
     
     @objc
     private func goToMediaLink() {
-        print("goToMediaLink")
+        if let url = URL(string: viewModel.output.detailData.value.mediaLink), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
 }
