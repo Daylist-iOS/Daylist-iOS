@@ -25,11 +25,11 @@ final class HomeVC: BaseViewController {
     }
     
     private let goToLastMonthBtn = UIButton().then {
-        $0.setImage(UIImage(named: "btn_before"), for: .normal)
+        $0.setImage(UIImage(named: "btn_before_touch"), for: .normal)
     }
     
     private let goToNextMonthBtn = UIButton().then {
-        $0.setImage(UIImage(named: "btn_after"), for: .normal)
+        $0.setImage(UIImage(named: "btn_after_touch"), for: .normal)
     }
     
     private let headerLabel = UILabel().then {
@@ -123,14 +123,14 @@ extension HomeVC {
         
         goToLastMonthBtn.snp.makeConstraints {
             $0.top.equalTo(settingBtn.snp.bottom).offset(36)
-            $0.leading.equalToSuperview().offset(22)
-            $0.height.equalTo(calculateHeightbyScreenHeight(originalHeight: 16))
-            $0.width.equalTo(calculateHeightbyScreenHeight(originalHeight: 16) * 8 / 16)
+            $0.leading.equalToSuperview().offset(15)
+            $0.height.equalTo(calculateHeightbyScreenHeight(originalHeight: 43))
+            $0.width.equalTo(calculateHeightbyScreenHeight(originalHeight: 43) * 25 / 43)
         }
         
         goToNextMonthBtn.snp.makeConstraints {
             $0.centerY.width.height.equalTo(goToLastMonthBtn)
-            $0.trailing.equalToSuperview().inset(22)
+            $0.trailing.equalToSuperview().inset(15)
         }
         
         headerLabel.snp.makeConstraints {
@@ -142,13 +142,13 @@ extension HomeVC {
         calendarCV.snp.makeConstraints {
             $0.top.equalTo(headerLabel.snp.bottom).offset(15)
             $0.leading.trailing.equalToSuperview().inset(21)
-            $0.bottom.equalTo(detailView.snp.top).inset(-26)
+            $0.bottom.equalTo(detailView.snp.top).inset(-16)
         }
         
         detailView.snp.makeConstraints {
             $0.bottom.equalTo(addBtn.snp.top).offset(-21)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(calculateHeightbyScreenHeight(originalHeight: 144))
+            $0.height.equalTo(calculateHeightbyScreenHeight(originalHeight: 134.adjustedH))
         }
         
         addBtn.snp.makeConstraints {
@@ -331,9 +331,9 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch indexPath.section {
         case 0:
-            return CGSize(width: 38, height: 18)
+            return CGSize(width: 38.adjusted, height: 18.adjustedH)
         default:
-            return CGSize(width: 48, height: 60)
+            return CGSize(width: 38.adjusted, height: 60.adjustedH)
         }
     }
     
@@ -346,9 +346,9 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         switch section {
         case 0:
-            return 7
+            return 7.adjusted
         default:
-            return 2
+            return 7.adjusted
         }
     }
     
