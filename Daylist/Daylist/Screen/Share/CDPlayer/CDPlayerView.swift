@@ -15,7 +15,7 @@ class CDPlayerView: BaseView {
             $0.image = UIImage(named: "PlayerBase")
         }
     
-    private var playerCD = UIImageView()
+    private(set) var playerCD = UIImageView()
         .then {
             $0.clipsToBounds = true
         }
