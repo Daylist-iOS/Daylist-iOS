@@ -11,7 +11,7 @@ import RxSwift
 import Alamofire
 
 protocol DetailViewModelOutput: Lodable {
-    var detailData: BehaviorRelay<[DetailResponseModel]> { get }
+    var detailData: BehaviorRelay<DetailResponseModel> { get }
     var onError: PublishSubject<APIError> { get }
 }
 
@@ -30,7 +30,7 @@ final class DetailVM: BaseViewModel {
     // MARK: - Output
     
     struct Output: DetailViewModelOutput {
-        var detailData = BehaviorRelay<[DetailResponseModel]>(value: [])
+        var detailData = BehaviorRelay<DetailResponseModel>(value: DetailResponseModel(playlistID: 0, userID: 0, title: "", description: "", thumbnailImage: "", mediaLink: "", emotion: 0, createdAt: ""))
         var onError = PublishSubject<APIError>()
         var loading = BehaviorRelay<Bool>(value: false)
     }
@@ -47,7 +47,6 @@ final class DetailVM: BaseViewModel {
     }
 }
 
-
 // MARK: - Input
 
 extension DetailVM {
@@ -60,12 +59,17 @@ extension DetailVM {
     func bindOutput() {}
 }
 
+// MARK: - Custom Methods
+
+extension DetailVM {
+}
+
 // MARK: - Networking
 
 extension DetailVM {
     func getDetailData(with detail: DetailRequestModel) {
         let path = "/playlist/\(detail.userId)/\(detail.playlistId)"
-        let resource = urlResource<[DetailResponseModel]>(path: path)
+        let resource = urlResource<DetailResponseModel>(path: path)
         if output.isLoading { return }
         output.beginLoading()
         
