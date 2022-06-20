@@ -25,11 +25,11 @@ final class HomeVC: BaseViewController {
     }
     
     private let goToLastMonthBtn = UIButton().then {
-        $0.setImage(UIImage(named: "btn_before"), for: .normal)
+        $0.setImage(UIImage(named: "btn_before_touch"), for: .normal)
     }
     
     private let goToNextMonthBtn = UIButton().then {
-        $0.setImage(UIImage(named: "btn_after"), for: .normal)
+        $0.setImage(UIImage(named: "btn_after_touch"), for: .normal)
     }
     
     private let headerLabel = UILabel().then {
@@ -123,14 +123,14 @@ extension HomeVC {
         
         goToLastMonthBtn.snp.makeConstraints {
             $0.top.equalTo(settingBtn.snp.bottom).offset(36)
-            $0.leading.equalToSuperview().offset(22)
-            $0.height.equalTo(calculateHeightbyScreenHeight(originalHeight: 16))
-            $0.width.equalTo(calculateHeightbyScreenHeight(originalHeight: 16) * 8 / 16)
+            $0.leading.equalToSuperview().offset(15)
+            $0.height.equalTo(calculateHeightbyScreenHeight(originalHeight: 43))
+            $0.width.equalTo(calculateHeightbyScreenHeight(originalHeight: 43) * 25 / 43)
         }
         
         goToNextMonthBtn.snp.makeConstraints {
             $0.centerY.width.height.equalTo(goToLastMonthBtn)
-            $0.trailing.equalToSuperview().inset(22)
+            $0.trailing.equalToSuperview().inset(15)
         }
         
         headerLabel.snp.makeConstraints {
