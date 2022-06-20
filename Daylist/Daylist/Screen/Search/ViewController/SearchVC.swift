@@ -22,6 +22,7 @@ final class SearchVC: BaseViewController {
         $0.tintColor = .black
         $0.isTranslucent = false
         $0.becomeFirstResponder()
+        $0.searchTextField.font = UIFont.KyoboHandwriting(size: 15.0)
         $0.backgroundImage = UIImage()
     }
     
@@ -153,6 +154,7 @@ extension SearchVC: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         let cancelBtn = searchBar.value(forKey: "cancelButton") as! UIButton
         cancelBtn.setTitle("나가기", for: .normal)
+        cancelBtn.titleLabel?.font = UIFont.KyoboHandwriting(size: 15.0)
     }
     
     /// searchBarCancelButtonClicked
