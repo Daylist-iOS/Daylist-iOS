@@ -27,7 +27,7 @@ final class YoutubeSearchVC: BaseViewController {
     
     private var searchBtn = UIButton()
         .then {
-            $0.tintColor = .black
+            $0.tintColor = .label
             $0.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
         }
     
@@ -181,7 +181,7 @@ extension YoutubeSearchVC {
             .distinctUntilChanged()
             .subscribe(onNext: {[weak self] text in
                 guard let self = self else { return }
-                self.searchBtn.tintColor = text.isEmpty ? .lightGray : .black
+                self.searchBtn.tintColor = text.isEmpty ? .lightGray : .label
                 self.searchBtn.isEnabled = text.isEmpty ? false : true
             })
             .disposed(by: bag)

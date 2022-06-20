@@ -23,6 +23,9 @@ class EmbedVC: BaseViewController {
             $0.placeholder = "URL"
             $0.font = .KyoboHandwriting(size: 15)
             $0.clearButtonMode = .always
+            $0.textColor = .black
+            $0.attributedPlaceholder = NSAttributedString(string: $0.placeholder ?? "",
+                                                          attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
         }
     
     private let separator = UIView()
@@ -69,6 +72,7 @@ class EmbedVC: BaseViewController {
     private let resultView = YoutubeSearchTVC()
         .then {
             $0.isHidden = true
+            $0.titleLabel.textColor = .black
         }
     
     private let bag = DisposeBag()
@@ -116,6 +120,11 @@ extension EmbedVC {
         baseView.addSubviews([searchTextField, separator, messageLabel, stackView, resultView])
         stackView.addArrangedSubview(cancelBtn)
         stackView.addArrangedSubview(confirmBtn)
+        if let clearButton = searchTextField.value(forKey: "_clearButton") as? UIButton {
+            let templateImage = clearButton.imageView?.image?.withRenderingMode(.alwaysTemplate)
+            clearButton.setImage(templateImage, for: .normal)
+            clearButton.tintColor = .lightGray
+        }
     }
 }
 

@@ -28,7 +28,7 @@ final class LockVM: BaseViewModel {
     // MARK: - Output
     
     struct Output {
-        var isValidPW = BehaviorSubject(value: false)
+        var isValidPW = PublishSubject<Bool>()
     }
     
     // MARK: - Init

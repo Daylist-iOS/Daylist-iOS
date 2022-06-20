@@ -18,6 +18,7 @@ class EmbedSelectVC: BaseViewController {
         .then {
             $0.text = "URL 추가"
             $0.font = .KyoboHandwriting(size: 14)
+            $0.textColor = .black
         }
     
     private var embedBtn = UIButton()

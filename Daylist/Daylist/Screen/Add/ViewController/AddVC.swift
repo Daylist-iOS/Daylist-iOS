@@ -30,7 +30,7 @@ class AddVC: BaseViewController {
     private var searchIcon = UIImageView()
         .then {
             $0.image = UIImage(systemName: "link")
-            $0.tintColor = .black
+            $0.tintColor = .label
         }
     
     private var separator = UIView()
