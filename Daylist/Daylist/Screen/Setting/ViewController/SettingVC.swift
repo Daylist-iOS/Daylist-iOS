@@ -110,6 +110,7 @@ extension SettingVC {
                 ad.window?.overrideUserInterfaceStyle = isDarkMode ? .light : .dark
                 UserDefaults.standard.set(isDarkMode ? "Light" : "Dark", forKey: "Appearance")
                 self.viewWillAppear(true)
+                self.popupToast(toastType: .changeUIUserInterfaceStyle)
             })
             .disposed(by: bag)
         

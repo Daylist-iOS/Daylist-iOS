@@ -11,16 +11,10 @@ enum ToastType: String {
     case changeUIUserInterfaceStyle
     case addMedia
     case changePW
+    case chooseAll
 }
 
 extension ToastType {
-    var position: String {
-        switch self {
-        case .changeUIUserInterfaceStyle, .addMedia, .changePW:
-            return "bottom"
-        }
-    }
-    
     var message: String {
         switch self {
         case .changeUIUserInterfaceStyle:
@@ -31,6 +25,8 @@ extension ToastType {
             return "미디어가 등록되었습니다."
         case .changePW:
             return "암호가 변경되었습니다."
+        case .chooseAll:
+            return "모든 항목을 선택해 주세요."
         }
     }
 }

@@ -34,7 +34,9 @@ final class AddVM: BaseViewModel {
     
     // MARK: - Input
     
-    struct Input {}
+    struct Input {
+        var postModel = PublishRelay<AddModel>()
+    }
     
     // MARK: - Output
     
@@ -44,6 +46,7 @@ final class AddVM: BaseViewModel {
         var loading = BehaviorRelay<Bool>(value: false)
         var addResponseSuccess = PublishSubject<Bool>()
         var media = PublishRelay<EmbedModel>()
+        var isValidPost = PublishSubject<Bool>()
     }
     
     // MARK: - Init
@@ -58,10 +61,24 @@ final class AddVM: BaseViewModel {
     }
 }
 
+// MARK: - Helpers
+
+extension AddVM {
+    private func checkValid(post: AddModel) -> Bool {
+        if post.title == "" || post.thumbnailImage == UIImage() || post.mediaLink == "" || post.emotion == nil || post.description == nil {
+            return false
+        } else { return true }
+    }
+}
+
 // MARK: - Input
 
 extension AddVM {
-    func bindInput() {}
+    func bindInput() {
+        _ = input.postModel
+            .map(checkValid)
+            .bind(to: output.isValidPost)
+    }
 }
 
 // MARK: - Output

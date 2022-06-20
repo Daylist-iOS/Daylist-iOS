@@ -204,7 +204,11 @@ extension LockVC {
             .subscribe(onNext: {[weak self] isValid in
                 guard let self = self else { return }
                 if isValid {
-                    self.dismiss(animated: true)
+                    self.dismiss(animated: false) {
+                        if self.lockType != .checkPW { return }
+                        let ad = UIApplication.shared.delegate as! AppDelegate
+                        ad.window?.rootViewController?.popupToast(toastType: .changePW)
+                    }
                 } else {
                     self.wrongAnimation()
                     UIDevice.vibrate()
