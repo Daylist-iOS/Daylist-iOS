@@ -216,6 +216,7 @@ extension HomeVC {
         
         calendarCV.rx.itemSelected
             .subscribe(onNext: { indexPath in
+                self.viewModel.selectedPlaylistId.accept(self.viewModel.dayData.value[indexPath.row].playlistID)
                 self.detailView.setData(
                     isData: self.viewModel.dayData.value[indexPath.row].playlistID == 0 ? .none : .exist,
                     model: CalendarSummaryModel(
@@ -230,7 +231,9 @@ extension HomeVC {
         detailView.rx.tapGesture()
             .when(.ended)
             .subscribe(onNext: { _ in
-                // TODO: 상세뷰와 연결
+                let detailVC = DetailVC()
+                detailVC.playlistId = self.viewModel.selectedPlaylistId.value
+                self.navigationController?.pushViewController(detailVC, animated: true)
             })
             .disposed(by: bag)
     }

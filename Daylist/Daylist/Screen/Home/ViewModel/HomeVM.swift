@@ -47,6 +47,7 @@ final class HomeVM: BaseViewModel {
     private var components = DateComponents()
     var weeks: [String] = ["일", "월", "화", "수", "목", "금", "토"]
     var days: [String] = []
+    var selectedPlaylistId = BehaviorRelay<Int>(value: 0)
     private var daysCountInMonth = 0 // 해당 월이 며칠까지 있는지
     private var weekdayAdding = 0 // 시작일
     private(set) var dayData = BehaviorRelay<[CalendarDataResponse]>(value: [])
