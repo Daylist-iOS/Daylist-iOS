@@ -45,6 +45,10 @@ extension NavigationBar {
         self.title.text = title
     }
     
+    func setNaviBarTitleText(title: String) {
+        self.title.text = title
+    }
+    
     func configureBackBtn(targetVC: UIViewController, action: Selector, naviType: NaviType) {
         self.addSubview(backBtn)
         backBtn.snp.makeConstraints {

@@ -56,6 +56,7 @@ final class SearchVC: BaseViewController {
     
     override func bindInput() {
         super.bindInput()
+        bindUserInteractions()
     }
     
     override func bindOutput() {
@@ -94,6 +95,20 @@ extension SearchVC {
             $0.top.equalTo(searchBar.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+    }
+}
+
+// MARK: - Input
+
+extension SearchVC {
+    private func bindUserInteractions() {
+        searchResultTV.rx.itemSelected
+            .subscribe(onNext: { indexPath in
+                let detailVC = DetailVC()
+                detailVC.playlistId = self.viewModel.output.searchData.value[indexPath.row].playlistID
+                self.navigationController?.pushViewController(detailVC, animated: true)
+            })
+            .disposed(by: bag)
     }
 }
 
