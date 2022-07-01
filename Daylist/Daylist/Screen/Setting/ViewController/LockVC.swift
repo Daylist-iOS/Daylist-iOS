@@ -207,7 +207,7 @@ extension LockVC {
                     self.dismiss(animated: false) {
                         if self.lockType != .checkPW { return }
                         let ad = UIApplication.shared.delegate as! AppDelegate
-                        ad.window?.rootViewController?.popupToast(toastType: .changePW)
+                        UIApplication.topViewController(base: ad.window?.rootViewController)?.popupToast(toastType: .changePW)
                     }
                 } else {
                     self.wrongAnimation()
